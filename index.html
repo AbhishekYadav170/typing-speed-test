@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Type Speed Check</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="main">
+      <header class="header">
+        <h2>Typing Speed Test</h2>
+        <p>Test your typing speed and accuracy</p>
+      </header>
+
+      <section class="typing-card">
+
+        <div class="stats">
+
+          <div class="stats-box">
+            <span class="stat-label">Time</span>
+            <strong id="timer">60s</strong>
+          </div>
+
+          <div class="stats-box">
+            <span class="stat-label">WPM</span>
+            <strong id="wpm">0</strong>
+          </div>
+
+          <div class="stats-box">
+            <span class="stat-label">Accuracy</span>
+            <strong id="accuracy">100%</strong>
+          </div>
+
+        </div>
+
+        <div class="text-container">
+          <h2>Type the following text:</h2>
+
+          <div id="textDisplay" class="text-dispaly">
+            The quick brown fox jumps over the lazy dog. Learning to type
+            quickly and accurately is an important skill for students and
+            professionals. Regular practice can improve your typing speed,
+            accuracy, and confidence.
+          </div>
+        </div>
+
+        <div class="input-container">
+          <label for="textinput">Start typing here</label>
+
+          <textarea
+            id="textInput"
+            rows="6"
+            placeholder="Click Start Test and begin typing..."
+            disabled
+            spellcheck="false"
+          ></textarea>
+        </div>
+
+        <!-- Button  -->
+
+        <div class="button-container">
+            
+          <button id="startBtn" class="btn primary-btn">Start Test</button>
+
+          <button id="restartBtn" class="btn primary-btn">Restart</button>
+        </div>
+
+        <!-- Result -->
+        <div id="result" class="result hidden">
+          <h2>Test Completed 🎉</h2>
+
+          <div class="result-grid">
+            <div class="result-box">
+              <span>WPM</span>
+              <strong id="finalWpm">0</strong>
+            </div>
+
+            <div class="result-box">
+              <span>Accuracy</span>
+              <strong id="finalAccuracy">0%</strong>
+            </div>
+
+            <div class="result-box">
+              <span>Time Taken</span>
+              <strong id="finalTime">0s</strong>
+            </div>
+          </div>
+
+          <p id="resultMessage">
+            Great job! Keep practicing to improve your typing speed.
+          </p>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer>
+        <p>Typing Speed Test &copy; 2026 | SpireX Foundation</p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
