@@ -3,18 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Type Speed Check</title>
+
+    <title>Typing Speed Test</title>
+
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
+
     <div class="main">
+
+      <!-- Header -->
       <header class="header">
-        <h2>Typing Speed Test</h2>
+        <h1>Typing Speed Test</h1>
         <p>Test your typing speed and accuracy</p>
       </header>
 
+
+      <!-- Typing Card -->
       <section class="typing-card">
 
+        <!-- Stats -->
         <div class="stats">
 
           <div class="stats-box">
@@ -34,19 +43,29 @@
 
         </div>
 
-        <div class="text-container">
-          <h2>Type the following text:</h2>
 
-          <div id="textDisplay" class="text-dispaly">
-            The quick brown fox jumps over the lazy dog. Learning to type
-            quickly and accurately is an important skill for students and
-            professionals. Regular practice can improve your typing speed,
-            accuracy, and confidence.
-          </div>
+        <!-- Progress Bar -->
+        <div class="progress-container">
+          <div id="progressBar" class="progress-bar"></div>
         </div>
 
+
+        <!-- Text -->
+        <div class="text-container">
+
+          <h2>Type the following text:</h2>
+
+          <div id="textDisplay" class="text-display"></div>
+
+        </div>
+
+
+        <!-- Input -->
         <div class="input-container">
-          <label for="textinput">Start typing here</label>
+
+          <label for="textInput">
+            Start typing here
+          </label>
 
           <textarea
             id="textInput"
@@ -55,22 +74,44 @@
             disabled
             spellcheck="false"
           ></textarea>
+
         </div>
 
-        <!-- Button  -->
 
+        <!-- Buttons -->
         <div class="button-container">
-            
-          <button id="startBtn" class="btn primary-btn">Start Test</button>
 
-          <button id="restartBtn" class="btn primary-btn">Restart</button>
+          <button
+            id="startBtn"
+            class="btn primary-btn"
+          >
+            Start Test
+          </button>
+
+          <button
+            id="restartBtn"
+            class="btn secondary-btn"
+          >
+            Restart
+          </button>
+
         </div>
+
+
+        <!-- Best Score -->
+        <div class="best-score">
+          🏆 Best WPM:
+          <strong id="bestWpm">0</strong>
+        </div>
+
 
         <!-- Result -->
         <div id="result" class="result hidden">
+
           <h2>Test Completed 🎉</h2>
 
           <div class="result-grid">
+
             <div class="result-box">
               <span>WPM</span>
               <strong id="finalWpm">0</strong>
@@ -82,23 +123,48 @@
             </div>
 
             <div class="result-box">
-              <span>Time Taken</span>
-              <strong id="finalTime">0s</strong>
+              <span>Words Typed</span>
+              <strong id="finalWords">0</strong>
             </div>
+
+            <div class="result-box">
+              <span>Characters</span>
+              <strong id="finalCharacters">0</strong>
+            </div>
+
+            <div class="result-box">
+              <span>Correct Characters</span>
+              <strong id="finalCorrect">0</strong>
+            </div>
+
+            <div class="result-box">
+              <span>Time Taken</span>
+              <strong id="finalTime">60s</strong>
+            </div>
+
           </div>
 
           <p id="resultMessage">
-            Great job! Keep practicing to improve your typing speed.
+            Keep practicing to improve your typing speed.
           </p>
+
         </div>
+
       </section>
+
 
       <!-- Footer -->
       <footer>
-        <p>Typing Speed Test &copy; 2026 | SpireX Foundation</p>
+        <p>
+          Typing Speed Test &copy; 2026 |
+          SpireX Foundation
+        </p>
       </footer>
+
     </div>
 
+
     <script src="script.js"></script>
+
   </body>
 </html>
