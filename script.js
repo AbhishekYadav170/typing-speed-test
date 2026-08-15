@@ -1,6 +1,457 @@
 
 
 
+// const input = document.getElementById("textInput");
+// const startBtn = document.getElementById("startBtn");
+// const restartBtn = document.getElementById("restartBtn");
+
+// const timer = document.getElementById("timer");
+// const wpm = document.getElementById("wpm");
+// const accuracy = document.getElementById("accuracy");
+
+// const textDisplay = document.getElementById("textDisplay");
+// const progressBar = document.getElementById("progressBar");
+
+// const result = document.getElementById("result");
+// const finalWpm = document.getElementById("finalWpm");
+// const finalAccuracy = document.getElementById("finalAccuracy");
+// const finalWords = document.getElementById("finalWords");
+// const finalCharacters = document.getElementById("finalCharacters");
+// const finalCorrect = document.getElementById("finalCorrect");
+// const finalTime = document.getElementById("finalTime");
+// const resultMessage = document.getElementById("resultMessage");
+
+// const bestWpm = document.getElementById("bestWpm");
+
+
+// // ===============================
+// // PARAGRAPHS
+// // ===============================
+
+// const paragraphs = [
+
+//     "The quick brown fox jumps over the lazy dog. Learning to type quickly and accurately is an important skill for students and professionals.",
+
+//     "Technology has changed the way we work and communicate. Learning new skills and practicing regularly can help us become more confident and productive.",
+
+//     "Success does not come from doing something once. Regular practice, patience, and consistency are important for improving any skill over time.",
+
+//     "Web development is an interesting field where creativity and technology work together. HTML, CSS, and JavaScript are important tools for building websites.",
+
+//     "Reading books and learning new things can improve knowledge and communication skills. Small improvements every day can make a big difference.",
+    
+//     "Practice makes typing faster and easier. Stay focused, keep your hands relaxed, and type each word carefully. With regular practice, your speed, accuracy, and confidence will improve every day."
+// ];
+
+
+// // ===============================
+// // VARIABLES
+// // ===============================
+
+// let time = 60;
+// let interval = null;
+// let testStarted = false;
+// let currentText = "";
+
+
+// // ===============================
+// // RANDOM TEXT
+// // ===============================
+
+// function showRandomText() {
+
+//     let randomNumber =
+//         Math.floor(Math.random() * paragraphs.length);
+
+//     currentText = paragraphs[randomNumber];
+
+//     textDisplay.innerHTML = "";
+
+//     for (let i = 0; i < currentText.length; i++) {
+
+//         let span = document.createElement("span");
+
+//         span.innerText = currentText[i];
+
+//         textDisplay.appendChild(span);
+//     }
+// }
+
+
+// // Show first paragraph
+// showRandomText();
+
+
+// // ===============================
+// // BEST WPM
+// // ===============================
+
+// let savedBest = localStorage.getItem("bestWpm");
+
+// if (savedBest) {
+//     bestWpm.innerText = savedBest;
+// }
+
+
+// // ===============================
+// // START TEST
+// // ===============================
+
+// startBtn.addEventListener("click", function () {
+
+//     if (testStarted) {
+//         return;
+//     }
+
+//     testStarted = true;
+
+//     time = 60;
+
+//     timer.innerText = "60s";
+//     wpm.innerText = "0";
+//     accuracy.innerText = "100%";
+
+//     progressBar.style.width = "100%";
+
+//     input.value = "";
+//     input.disabled = false;
+
+//     result.classList.add("hidden");
+
+//     startBtn.disabled = true;
+
+//     input.focus();
+
+//     startTimer();
+
+// });
+
+
+// // ===============================
+// // TIMER
+// // ===============================
+
+// function startTimer() {
+
+//     interval = setInterval(function () {
+
+//         time--;
+
+//         timer.innerText = time + "s";
+
+
+//         // Progress bar
+//         let progress = (time / 60) * 100;
+
+//         progressBar.style.width = progress + "%";
+
+
+//         calculate();
+
+
+//         if (time <= 0) {
+
+//             time = 0;
+
+//             timer.innerText = "0s";
+
+//             progressBar.style.width = "0%";
+
+//             finishTest();
+//         }
+
+//     }, 1000);
+// }
+
+
+// // ===============================
+// // TYPING
+// // ===============================
+
+// input.addEventListener("input", function () {
+
+//     if (!testStarted) {
+//         return;
+//     }
+
+//     calculate();
+
+//     highlightText();
+
+// });
+
+
+// // ===============================
+// // CALCULATE
+// // ===============================
+
+// function calculate() {
+
+//     let typed = input.value;
+
+//     if (typed.length === 0) {
+
+//         wpm.innerText = "0";
+//         accuracy.innerText = "100%";
+
+//         return;
+//     }
+
+
+//     // Correct characters
+//     let correct = 0;
+
+//     for (let i = 0; i < typed.length; i++) {
+
+//         if (typed[i] === currentText[i]) {
+//             correct++;
+//         }
+
+//     }
+
+
+//     // Accuracy
+//     let accuracyValue =
+//         (correct / typed.length) * 100;
+
+//     accuracy.innerText =
+//         Math.round(accuracyValue) + "%";
+
+
+//     // WPM
+//     let usedTime = 60 - time;
+
+//     if (usedTime > 0) {
+
+//         let words =
+//             typed.trim().split(/\s+/).length;
+
+//         let minutes = usedTime / 60;
+
+//         let speed = words / minutes;
+
+//         wpm.innerText =
+//             Math.round(speed);
+//     }
+
+// }
+
+
+// // ===============================
+// // CHARACTER HIGHLIGHT
+// // ===============================
+
+// function highlightText() {
+
+//     let typed = input.value;
+
+//     let spans = textDisplay.querySelectorAll("span");
+
+
+//     for (let i = 0; i < spans.length; i++) {
+
+//         spans[i].classList.remove(
+//             "correct",
+//             "wrong",
+//             "current"
+//         );
+
+
+//         if (i < typed.length) {
+
+//             if (typed[i] === currentText[i]) {
+
+//                 spans[i].classList.add("correct");
+
+//             } else {
+
+//                 spans[i].classList.add("wrong");
+//             }
+
+//         }
+
+
+//         if (i === typed.length) {
+
+//             spans[i].classList.add("current");
+//         }
+
+//     }
+
+// }
+
+
+// // ===============================
+// // FINISH TEST
+// // ===============================
+
+// function finishTest() {
+
+//     clearInterval(interval);
+
+//     interval = null;
+
+//     testStarted = false;
+
+//     time = 0;
+
+//     timer.innerText = "0s";
+
+//     progressBar.style.width = "0%";
+
+//     input.disabled = true;
+
+//     startBtn.disabled = false;
+
+
+//     let typed = input.value;
+
+
+//     // Words
+//     let totalWords = 0;
+
+//     if (typed.trim().length > 0) {
+
+//         totalWords =
+//             typed.trim().split(/\s+/).length;
+//     }
+
+
+//     // Characters
+//     let totalCharacters = typed.length;
+
+
+//     // Correct characters
+//     let correct = 0;
+
+//     for (let i = 0; i < typed.length; i++) {
+
+//         if (typed[i] === currentText[i]) {
+//             correct++;
+//         }
+
+//     }
+
+
+//     // Accuracy
+//     let accuracyValue = 100;
+
+//     if (totalCharacters > 0) {
+
+//         accuracyValue =
+//             (correct / totalCharacters) * 100;
+//     }
+
+
+//     // WPM
+//     // Test is exactly 60 seconds
+//     let speed = totalWords;
+
+
+//     // Final result
+//     finalWpm.innerText = speed;
+
+//     finalAccuracy.innerText =
+//         Math.round(accuracyValue) + "%";
+
+//     finalWords.innerText =
+//         totalWords;
+
+//     finalCharacters.innerText =
+//         totalCharacters;
+
+//     finalCorrect.innerText =
+//         correct;
+
+//     finalTime.innerText =
+//         "60s";
+
+
+//     // Best score
+//     let oldBest =
+//         Number(localStorage.getItem("bestWpm")) || 0;
+
+//     if (speed > oldBest) {
+
+//         localStorage.setItem(
+//             "bestWpm",
+//             speed
+//         );
+
+//         bestWpm.innerText = speed;
+
+//     }
+
+
+//     // Message
+//     if (speed >= 60) {
+
+//         resultMessage.innerText =
+//             "Excellent! Your typing speed is amazing! 🔥";
+
+//     } else if (speed >= 40) {
+
+//         resultMessage.innerText =
+//             "Great job! Keep practicing to improve your speed. 💪";
+
+//     } else if (speed >= 25) {
+
+//         resultMessage.innerText =
+//             "Good effort! Regular practice will make you faster. 👍";
+
+//     } else {
+
+//         resultMessage.innerText =
+//             "Keep practicing! You will improve with time. 🚀";
+//     }
+
+
+//     result.classList.remove("hidden");
+
+//     result.scrollIntoView({
+//         behavior: "smooth"
+//     });
+
+// }
+
+
+// // ===============================
+// // RESTART
+// // ===============================
+
+// restartBtn.addEventListener("click", function () {
+
+//     clearInterval(interval);
+
+//     interval = null;
+
+//     testStarted = false;
+
+//     time = 60;
+
+//     timer.innerText = "60s";
+
+//     wpm.innerText = "0";
+
+//     accuracy.innerText = "100%";
+
+//     progressBar.style.width = "100%";
+
+//     input.value = "";
+
+//     input.disabled = true;
+
+//     startBtn.disabled = false;
+
+//     result.classList.add("hidden");
+
+
+//     // New paragraph
+//     showRandomText();
+
+// });
+
+
 const input = document.getElementById("textInput");
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
@@ -8,94 +459,232 @@ const restartBtn = document.getElementById("restartBtn");
 const timer = document.getElementById("timer");
 const wpm = document.getElementById("wpm");
 const accuracy = document.getElementById("accuracy");
+const mistakesDisplay = document.getElementById("mistakes");
 
 const textDisplay = document.getElementById("textDisplay");
 const progressBar = document.getElementById("progressBar");
 
 const result = document.getElementById("result");
+
 const finalWpm = document.getElementById("finalWpm");
 const finalAccuracy = document.getElementById("finalAccuracy");
 const finalWords = document.getElementById("finalWords");
 const finalCharacters = document.getElementById("finalCharacters");
 const finalCorrect = document.getElementById("finalCorrect");
+const finalMistakes = document.getElementById("finalMistakes");
 const finalTime = document.getElementById("finalTime");
 const resultMessage = document.getElementById("resultMessage");
 
-const bestWpm = document.getElementById("bestWpm");
+const bestWpmDisplay = document.getElementById("bestWpm");
+
+const themeBtn = document.getElementById("themeBtn");
+const clearHistoryBtn = document.getElementById("clearHistory");
+const scoreHistory = document.getElementById("scoreHistory");
+
+const difficultyButtons =
+    document.querySelectorAll(".difficulty-btn");
+
+const timeButtons =
+    document.querySelectorAll(".time-btn");
 
 
-// ===============================
+// ======================================
 // PARAGRAPHS
-// ===============================
+// ======================================
 
-const paragraphs = [
+const paragraphs = {
 
-    "The quick brown fox jumps over the lazy dog. Learning to type quickly and accurately is an important skill for students and professionals.",
+    easy: [
+        "The quick brown fox jumps over the lazy dog. Learning to type quickly is a useful skill for students and professionals.",
 
-    "Technology has changed the way we work and communicate. Learning new skills and practicing regularly can help us become more confident and productive.",
+        "Practice makes typing faster and easier. Stay focused and type each word carefully. Regular practice improves your confidence.",
 
-    "Success does not come from doing something once. Regular practice, patience, and consistency are important for improving any skill over time.",
+        "Reading books and learning new things can improve knowledge and communication skills. Small improvements every day can make a big difference."
+    ],
 
-    "Web development is an interesting field where creativity and technology work together. HTML, CSS, and JavaScript are important tools for building websites.",
+    medium: [
+        "Technology has changed the way people work and communicate. Learning new skills and practicing regularly can help us become more confident and productive.",
 
-    "Reading books and learning new things can improve knowledge and communication skills. Small improvements every day can make a big difference.",
-    
-    "Practice makes typing faster and easier. Stay focused, keep your hands relaxed, and type each word carefully. With regular practice, your speed, accuracy, and confidence will improve every day."
-];
+        "Web development is an interesting field where creativity and technology work together. HTML, CSS, and JavaScript are important tools for building websites.",
+
+        "Success does not come from doing something once. Regular practice, patience, and consistency are important for improving any skill over time."
+    ],
+
+    hard: [
+        "Modern software development requires developers to understand algorithms, responsive interfaces, accessibility, performance optimization, and clean maintainable code.",
+
+        "Artificial intelligence is transforming industries by helping organizations analyze information, automate repetitive tasks, and create intelligent applications for different users.",
+
+        "Professional developers continuously improve their problem-solving abilities by studying documentation, debugging applications, reviewing code, and learning from practical experience."
+    ]
+
+};
 
 
-// ===============================
+// ======================================
 // VARIABLES
-// ===============================
+// ======================================
 
-let time = 60;
+let selectedDifficulty = "easy";
+
+let selectedTime = 60;
+
+let time = selectedTime;
+
 let interval = null;
+
 let testStarted = false;
+
 let currentText = "";
 
 
-// ===============================
+// ======================================
 // RANDOM TEXT
-// ===============================
+// ======================================
 
 function showRandomText() {
 
-    let randomNumber =
-        Math.floor(Math.random() * paragraphs.length);
+    const list = paragraphs[selectedDifficulty];
 
-    currentText = paragraphs[randomNumber];
+    const randomNumber =
+        Math.floor(Math.random() * list.length);
+
+    currentText = list[randomNumber];
 
     textDisplay.innerHTML = "";
 
     for (let i = 0; i < currentText.length; i++) {
 
-        let span = document.createElement("span");
+        const span = document.createElement("span");
 
         span.innerText = currentText[i];
 
         textDisplay.appendChild(span);
     }
+
 }
 
 
-// Show first paragraph
-showRandomText();
+// ======================================
+// BEST SCORE
+// ======================================
 
+function loadBestScore() {
 
-// ===============================
-// BEST WPM
-// ===============================
+    const best =
+        Number(localStorage.getItem("bestWpm")) || 0;
 
-let savedBest = localStorage.getItem("bestWpm");
-
-if (savedBest) {
-    bestWpm.innerText = savedBest;
+    bestWpmDisplay.innerText = best;
 }
 
+loadBestScore();
 
-// ===============================
+
+// ======================================
+// SCORE HISTORY
+// ======================================
+
+function loadHistory() {
+
+    const history =
+        JSON.parse(localStorage.getItem("typingScores")) || [];
+
+    scoreHistory.innerHTML = "";
+
+    if (history.length === 0) {
+
+        scoreHistory.innerHTML =
+            '<p class="no-history">No scores yet.</p>';
+
+        return;
+    }
+
+    history.slice(0, 5).forEach(function (score) {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "score-item";
+
+        item.innerHTML = `
+            <span>${score.date}</span>
+            <span>${score.accuracy}% Accuracy</span>
+            <strong>${score.wpm} WPM</strong>
+        `;
+
+        scoreHistory.appendChild(item);
+
+    });
+
+}
+
+loadHistory();
+
+
+// ======================================
+// DIFFICULTY
+// ======================================
+
+difficultyButtons.forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+        if (testStarted) {
+            return;
+        }
+
+        difficultyButtons.forEach(function (btn) {
+            btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        selectedDifficulty =
+            button.dataset.level;
+
+        showRandomText();
+
+    });
+
+});
+
+
+// ======================================
+// TIME
+// ======================================
+
+timeButtons.forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+        if (testStarted) {
+            return;
+        }
+
+        timeButtons.forEach(function (btn) {
+            btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        selectedTime =
+            Number(button.dataset.time);
+
+        time = selectedTime;
+
+        timer.innerText =
+            selectedTime + "s";
+
+        progressBar.style.width = "100%";
+
+    });
+
+});
+
+
+// ======================================
 // START TEST
-// ===============================
+// ======================================
 
 startBtn.addEventListener("click", function () {
 
@@ -105,15 +694,21 @@ startBtn.addEventListener("click", function () {
 
     testStarted = true;
 
-    time = 60;
+    time = selectedTime;
 
-    timer.innerText = "60s";
+    timer.innerText =
+        time + "s";
+
     wpm.innerText = "0";
+
     accuracy.innerText = "100%";
+
+    mistakesDisplay.innerText = "0";
 
     progressBar.style.width = "100%";
 
     input.value = "";
+
     input.disabled = false;
 
     result.classList.add("hidden");
@@ -122,51 +717,57 @@ startBtn.addEventListener("click", function () {
 
     input.focus();
 
+    highlightText();
+
     startTimer();
 
 });
 
 
-// ===============================
+// ======================================
 // TIMER
-// ===============================
+// ======================================
 
 function startTimer() {
+
+    clearInterval(interval);
 
     interval = setInterval(function () {
 
         time--;
 
-        timer.innerText = time + "s";
+        if (time < 0) {
+            time = 0;
+        }
+
+        timer.innerText =
+            time + "s";
 
 
-        // Progress bar
-        let progress = (time / 60) * 100;
+        const progress =
+            (time / selectedTime) * 100;
 
-        progressBar.style.width = progress + "%";
+        progressBar.style.width =
+            progress + "%";
 
 
         calculate();
 
 
-        if (time <= 0) {
-
-            time = 0;
-
-            timer.innerText = "0s";
-
-            progressBar.style.width = "0%";
+        if (time === 0) {
 
             finishTest();
+
         }
 
     }, 1000);
+
 }
 
 
-// ===============================
+// ======================================
 // TYPING
-// ===============================
+// ======================================
 
 input.addEventListener("input", function () {
 
@@ -181,111 +782,144 @@ input.addEventListener("input", function () {
 });
 
 
-// ===============================
+// ======================================
 // CALCULATE
-// ===============================
+// ======================================
 
 function calculate() {
 
-    let typed = input.value;
+    const typed = input.value;
 
     if (typed.length === 0) {
 
         wpm.innerText = "0";
+
         accuracy.innerText = "100%";
+
+        mistakesDisplay.innerText = "0";
 
         return;
     }
 
 
-    // Correct characters
     let correct = 0;
+
+    let mistakes = 0;
+
 
     for (let i = 0; i < typed.length; i++) {
 
         if (typed[i] === currentText[i]) {
+
             correct++;
+
+        } else {
+
+            mistakes++;
+
         }
 
     }
 
 
     // Accuracy
-    let accuracyValue =
+
+    const accuracyValue =
         (correct / typed.length) * 100;
 
     accuracy.innerText =
         Math.round(accuracyValue) + "%";
 
 
+    // Mistakes
+
+    mistakesDisplay.innerText =
+        mistakes;
+
+
     // WPM
-    let usedTime = 60 - time;
+
+    const usedTime =
+        selectedTime - time;
 
     if (usedTime > 0) {
 
-        let words =
+        const words =
             typed.trim().split(/\s+/).length;
 
-        let minutes = usedTime / 60;
+        const minutes =
+            usedTime / 60;
 
-        let speed = words / minutes;
+        const speed =
+            words / minutes;
 
         wpm.innerText =
             Math.round(speed);
+
     }
 
 }
 
 
-// ===============================
-// CHARACTER HIGHLIGHT
-// ===============================
+// ======================================
+// HIGHLIGHT TEXT
+// ======================================
 
 function highlightText() {
 
-    let typed = input.value;
+    const typed = input.value;
 
-    let spans = textDisplay.querySelectorAll("span");
+    const spans =
+        textDisplay.querySelectorAll("span");
 
 
-    for (let i = 0; i < spans.length; i++) {
+    spans.forEach(function (span, index) {
 
-        spans[i].classList.remove(
+        span.classList.remove(
             "correct",
             "wrong",
             "current"
         );
 
 
-        if (i < typed.length) {
+        if (index < typed.length) {
 
-            if (typed[i] === currentText[i]) {
+            if (
+                typed[index] ===
+                currentText[index]
+            ) {
 
-                spans[i].classList.add("correct");
+                span.classList.add("correct");
 
             } else {
 
-                spans[i].classList.add("wrong");
+                span.classList.add("wrong");
+
             }
 
         }
 
 
-        if (i === typed.length) {
+        if (index === typed.length) {
 
-            spans[i].classList.add("current");
+            span.classList.add("current");
+
         }
 
-    }
+    });
 
 }
 
 
-// ===============================
+// ======================================
 // FINISH TEST
-// ===============================
+// ======================================
 
 function finishTest() {
+
+    if (!testStarted) {
+        return;
+    }
 
     clearInterval(interval);
 
@@ -304,51 +938,71 @@ function finishTest() {
     startBtn.disabled = false;
 
 
-    let typed = input.value;
+    const typed = input.value;
 
 
     // Words
+
     let totalWords = 0;
 
     if (typed.trim().length > 0) {
 
         totalWords =
             typed.trim().split(/\s+/).length;
+
     }
 
 
     // Characters
-    let totalCharacters = typed.length;
+
+    const totalCharacters =
+        typed.length;
 
 
-    // Correct characters
+    // Correct / mistakes
+
     let correct = 0;
+
+    let mistakes = 0;
+
 
     for (let i = 0; i < typed.length; i++) {
 
         if (typed[i] === currentText[i]) {
+
             correct++;
+
+        } else {
+
+            mistakes++;
+
         }
 
     }
 
 
     // Accuracy
+
     let accuracyValue = 100;
 
     if (totalCharacters > 0) {
 
         accuracyValue =
             (correct / totalCharacters) * 100;
+
     }
 
 
     // WPM
-    // Test is exactly 60 seconds
-    let speed = totalWords;
+
+    const speed =
+        Math.round(
+            totalWords / (selectedTime / 60)
+        );
 
 
-    // Final result
+    // Result
+
     finalWpm.innerText = speed;
 
     finalAccuracy.innerText =
@@ -363,12 +1017,16 @@ function finishTest() {
     finalCorrect.innerText =
         correct;
 
+    finalMistakes.innerText =
+        mistakes;
+
     finalTime.innerText =
-        "60s";
+        selectedTime + "s";
 
 
-    // Best score
-    let oldBest =
+    // Best WPM
+
+    const oldBest =
         Number(localStorage.getItem("bestWpm")) || 0;
 
     if (speed > oldBest) {
@@ -378,12 +1036,22 @@ function finishTest() {
             speed
         );
 
-        bestWpm.innerText = speed;
+        bestWpmDisplay.innerText =
+            speed;
 
     }
 
 
+    // History
+
+    saveScore(
+        speed,
+        Math.round(accuracyValue)
+    );
+
+
     // Message
+
     if (speed >= 60) {
 
         resultMessage.innerText =
@@ -392,17 +1060,18 @@ function finishTest() {
     } else if (speed >= 40) {
 
         resultMessage.innerText =
-            "Great job! Keep practicing to improve your speed. 💪";
+            "Great job! Keep practicing to become even faster. 💪";
 
     } else if (speed >= 25) {
 
         resultMessage.innerText =
-            "Good effort! Regular practice will make you faster. 👍";
+            "Good effort! Regular practice will improve your speed. 👍";
 
     } else {
 
         resultMessage.innerText =
-            "Keep practicing! You will improve with time. 🚀";
+            "Keep practicing! You will improve with consistency. 🚀";
+
     }
 
 
@@ -415,9 +1084,72 @@ function finishTest() {
 }
 
 
-// ===============================
+// ======================================
+// SAVE SCORE
+// ======================================
+
+function saveScore(wpmValue, accuracyValue) {
+
+    let history =
+        JSON.parse(
+            localStorage.getItem("typingScores")
+        ) || [];
+
+
+    const now =
+        new Date();
+
+    const date =
+        now.toLocaleDateString();
+
+
+    history.unshift({
+
+        wpm: wpmValue,
+
+        accuracy: accuracyValue,
+
+        date: date
+
+    });
+
+
+    history =
+        history.slice(0, 5);
+
+
+    localStorage.setItem(
+        "typingScores",
+        JSON.stringify(history)
+    );
+
+
+    loadHistory();
+
+}
+
+
+// ======================================
+// CLEAR HISTORY
+// ======================================
+
+clearHistoryBtn.addEventListener(
+    "click",
+    function () {
+
+        localStorage.removeItem(
+            "typingScores"
+        );
+
+        loadHistory();
+
+    }
+);
+
+
+// ======================================
 // RESTART
-// ===============================
+// ======================================
 
 restartBtn.addEventListener("click", function () {
 
@@ -427,13 +1159,16 @@ restartBtn.addEventListener("click", function () {
 
     testStarted = false;
 
-    time = 60;
+    time = selectedTime;
 
-    timer.innerText = "60s";
+    timer.innerText =
+        selectedTime + "s";
 
     wpm.innerText = "0";
 
     accuracy.innerText = "100%";
+
+    mistakesDisplay.innerText = "0";
 
     progressBar.style.width = "100%";
 
@@ -445,8 +1180,61 @@ restartBtn.addEventListener("click", function () {
 
     result.classList.add("hidden");
 
-
-    // New paragraph
     showRandomText();
 
 });
+
+
+// ======================================
+// DARK MODE
+// ======================================
+
+themeBtn.addEventListener("click", function () {
+
+    document.body.classList.toggle("dark");
+
+    const dark =
+        document.body.classList.contains("dark");
+
+    if (dark) {
+
+        themeBtn.innerText = "☀️";
+
+        localStorage.setItem(
+            "theme",
+            "dark"
+        );
+
+    } else {
+
+        themeBtn.innerText = "🌙";
+
+        localStorage.setItem(
+            "theme",
+            "light"
+        );
+
+    }
+
+});
+
+
+// Load saved theme
+
+const savedTheme =
+    localStorage.getItem("theme");
+
+if (savedTheme === "dark") {
+
+    document.body.classList.add("dark");
+
+    themeBtn.innerText = "☀️";
+
+}
+
+
+// ======================================
+// INITIAL TEXT
+// ======================================
+
+showRandomText();

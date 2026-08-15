@@ -13,15 +13,62 @@
 
     <div class="main">
 
-      <!-- Header -->
       <header class="header">
-        <h1>Typing Speed Test</h1>
-        <p>Test your typing speed and accuracy</p>
+        <div class="header-top">
+          <div>
+            <h1>Typing Speed Test</h1>
+            <p>Test your typing speed and accuracy</p>
+          </div>
+
+          <button id="themeBtn" class="theme-btn">🌙</button>
+        </div>
       </header>
 
 
-      <!-- Typing Card -->
       <section class="typing-card">
+
+        <!-- Settings -->
+        <div class="settings">
+
+          <div class="setting-group">
+            <span>Difficulty</span>
+
+            <div class="options">
+              <button class="option-btn difficulty-btn active" data-level="easy">
+                Easy
+              </button>
+
+              <button class="option-btn difficulty-btn" data-level="medium">
+                Medium
+              </button>
+
+              <button class="option-btn difficulty-btn" data-level="hard">
+                Hard
+              </button>
+            </div>
+          </div>
+
+
+          <div class="setting-group">
+            <span>Time</span>
+
+            <div class="options">
+              <button class="option-btn time-btn" data-time="30">
+                30s
+              </button>
+
+              <button class="option-btn time-btn active" data-time="60">
+                60s
+              </button>
+
+              <button class="option-btn time-btn" data-time="120">
+                120s
+              </button>
+            </div>
+          </div>
+
+        </div>
+
 
         <!-- Stats -->
         <div class="stats">
@@ -41,10 +88,15 @@
             <strong id="accuracy">100%</strong>
           </div>
 
+          <div class="stats-box">
+            <span class="stat-label">Mistakes</span>
+            <strong id="mistakes">0</strong>
+          </div>
+
         </div>
 
 
-        <!-- Progress Bar -->
+        <!-- Progress -->
         <div class="progress-container">
           <div id="progressBar" class="progress-bar"></div>
         </div>
@@ -81,17 +133,11 @@
         <!-- Buttons -->
         <div class="button-container">
 
-          <button
-            id="startBtn"
-            class="btn primary-btn"
-          >
+          <button id="startBtn" class="btn primary-btn">
             Start Test
           </button>
 
-          <button
-            id="restartBtn"
-            class="btn secondary-btn"
-          >
+          <button id="restartBtn" class="btn secondary-btn">
             Restart
           </button>
 
@@ -138,6 +184,11 @@
             </div>
 
             <div class="result-box">
+              <span>Mistakes</span>
+              <strong id="finalMistakes">0</strong>
+            </div>
+
+            <div class="result-box">
               <span>Time Taken</span>
               <strong id="finalTime">60s</strong>
             </div>
@@ -150,10 +201,27 @@
 
         </div>
 
+
+        <!-- Score History -->
+        <div class="history">
+
+          <div class="history-header">
+            <h2>📈 Recent Scores</h2>
+
+            <button id="clearHistory">
+              Clear
+            </button>
+          </div>
+
+          <div id="scoreHistory" class="score-history">
+            <p class="no-history">No scores yet.</p>
+          </div>
+
+        </div>
+
       </section>
 
 
-      <!-- Footer -->
       <footer>
         <p>
           Typing Speed Test &copy; 2026 |
