@@ -35,9 +35,7 @@ const timeButtons =
     document.querySelectorAll(".time-btn");
 
 
-// ======================================
 // PARAGRAPHS
-// ======================================
 
 const paragraphs = {
 
@@ -68,9 +66,7 @@ const paragraphs = {
 };
 
 
-// ======================================
 // VARIABLES
-// ======================================
 
 let selectedDifficulty = "easy";
 
@@ -85,9 +81,8 @@ let testStarted = false;
 let currentText = "";
 
 
-// ======================================
+
 // RANDOM TEXT
-// ======================================
 
 function showRandomText() {
 
@@ -111,10 +106,8 @@ function showRandomText() {
 
 }
 
-
-// ======================================
 // BEST SCORE
-// ======================================
+
 
 function loadBestScore() {
 
@@ -127,9 +120,8 @@ function loadBestScore() {
 loadBestScore();
 
 
-// ======================================
 // SCORE HISTORY
-// ======================================
+
 
 function loadHistory() {
 
@@ -168,9 +160,7 @@ function loadHistory() {
 loadHistory();
 
 
-// ======================================
 // DIFFICULTY
-// ======================================
 
 difficultyButtons.forEach(function (button) {
 
@@ -196,9 +186,8 @@ difficultyButtons.forEach(function (button) {
 });
 
 
-// ======================================
 // TIME
-// ======================================
+
 
 timeButtons.forEach(function (button) {
 
@@ -229,9 +218,9 @@ timeButtons.forEach(function (button) {
 });
 
 
-// ======================================
+
 // START TEST
-// ======================================
+
 
 startBtn.addEventListener("click", function () {
 
@@ -270,10 +259,7 @@ startBtn.addEventListener("click", function () {
 
 });
 
-
-// ======================================
 // TIMER
-// ======================================
 
 function startTimer() {
 
@@ -311,10 +297,7 @@ function startTimer() {
 
 }
 
-
-// ======================================
 // TYPING
-// ======================================
 
 input.addEventListener("input", function () {
 
@@ -329,9 +312,7 @@ input.addEventListener("input", function () {
 });
 
 
-// ======================================
 // CALCULATE
-// ======================================
 
 function calculate() {
 
@@ -457,10 +438,8 @@ function highlightText() {
 
 }
 
-
-// ======================================
 // FINISH TEST
-// ======================================
+
 
 function finishTest() {
 
@@ -631,9 +610,8 @@ function finishTest() {
 }
 
 
-// ======================================
 // SAVE SCORE
-// ======================================
+
 
 function saveScore(wpmValue, accuracyValue) {
 
@@ -676,9 +654,8 @@ function saveScore(wpmValue, accuracyValue) {
 }
 
 
-// ======================================
+
 // CLEAR HISTORY
-// ======================================
 
 clearHistoryBtn.addEventListener(
     "click",
@@ -694,9 +671,7 @@ clearHistoryBtn.addEventListener(
 );
 
 
-// ======================================
-// RESTART
-// ======================================
+// RESTART 
 
 restartBtn.addEventListener("click", function () {
 
@@ -732,9 +707,8 @@ restartBtn.addEventListener("click", function () {
 });
 
 
-// ======================================
 // DARK MODE
-// ======================================
+
 
 themeBtn.addEventListener("click", function () {
 
@@ -779,9 +753,7 @@ if (savedTheme === "dark") {
 
 }
 
-
-// ======================================
 // INITIAL TEXT
-// ======================================
+
 
 showRandomText();
