@@ -1,238 +1,361 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Typing Speed Test</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css" />
-  </head>
+  <title>Typing Master</title>
 
-  <body>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-    <div class="main">
+<body>
 
-      <header class="header">
-        <div class="header-top">
-          <div>
-            <h1>Typing Speed Test</h1>
-            <p>Test your typing speed and accuracy</p>
-          </div>
+  <div class="main">
 
-          <button id="themeBtn" class="theme-btn">🌙</button>
-        </div>
-      </header>
+    <!-- HEADER -->
+    <header class="header">
 
+      <div>
+        <h1>Typing Master</h1>
+        <p>Learn typing step by step and improve your speed</p>
+      </div>
 
-      <section class="typing-card">
+      <button id="themeBtn" class="theme-btn">🌙</button>
 
-        <!-- Settings -->
-        <div class="settings">
+    </header>
 
-          <div class="setting-group">
-            <span>Difficulty</span>
 
-            <div class="options">
-              <button class="option-btn difficulty-btn active" data-level="easy">
-                Easy
-              </button>
+    <!-- MAIN CARD -->
+    <section class="typing-card">
 
-              <button class="option-btn difficulty-btn" data-level="medium">
-                Medium
-              </button>
 
-              <button class="option-btn difficulty-btn" data-level="hard">
-                Hard
-              </button>
-            </div>
-          </div>
+      <!-- LEVEL SELECTOR -->
+      <div class="section-title">
+        🎯 <span>Select Typing Level</span>
+      </div>
 
+      <div class="levels">
 
-          <div class="setting-group">
-            <span>Time</span>
+        <button class="level-btn active" data-level="1">
+          <strong>Level 1</strong>
+          <small>Finger Practice</small>
+        </button>
 
-            <div class="options">
-              <button class="option-btn time-btn" data-time="30">
-                30s
-              </button>
+        <button class="level-btn" data-level="2">
+          <strong>Level 2</strong>
+          <small>Keyboard Keys</small>
+        </button>
 
-              <button class="option-btn time-btn active" data-time="60">
-                60s
-              </button>
+        <button class="level-btn" data-level="3">
+          <strong>Level 3</strong>
+          <small>Easy Sentences</small>
+        </button>
 
-              <button class="option-btn time-btn" data-time="120">
-                120s
-              </button>
-            </div>
-          </div>
+        <button class="level-btn" data-level="4">
+          <strong>Level 4</strong>
+          <small>Sentences</small>
+        </button>
 
-        </div>
+        <button class="level-btn" data-level="5">
+          <strong>Level 5</strong>
+          <small>Paragraph</small>
+        </button>
 
+      </div>
 
-        <!-- Stats -->
-        <div class="stats">
 
-          <div class="stats-box">
-            <span class="stat-label">Time</span>
-            <strong id="timer">60s</strong>
-          </div>
+      <!-- LEVEL INFORMATION -->
+      <div class="level-info">
 
-          <div class="stats-box">
-            <span class="stat-label">WPM</span>
-            <strong id="wpm">0</strong>
-          </div>
+        <h2 id="levelTitle">
+          Level 1 - Finger Practice
+        </h2>
 
-          <div class="stats-box">
-            <span class="stat-label">Accuracy</span>
-            <strong id="accuracy">100%</strong>
-          </div>
-
-          <div class="stats-box">
-            <span class="stat-label">Mistakes</span>
-            <strong id="mistakes">0</strong>
-          </div>
-
-        </div>
-
-
-        <!-- Progress -->
-        <div class="progress-container">
-          <div id="progressBar" class="progress-bar"></div>
-        </div>
-
-
-        <!-- Text -->
-        <div class="text-container">
-
-          <h2>Type the following text:</h2>
-
-          <div id="textDisplay" class="text-display"></div>
-
-        </div>
-
-
-        <!-- Input -->
-        <div class="input-container">
-
-          <label for="textInput">
-            Start typing here
-          </label>
-
-          <textarea
-            id="textInput"
-            rows="6"
-            placeholder="Click Start Test and begin typing..."
-            disabled
-            spellcheck="false"
-          ></textarea>
-
-        </div>
-
-
-        <!-- Buttons -->
-        <div class="button-container">
-
-          <button id="startBtn" class="btn primary-btn">
-            Start Test
-          </button>
-
-          <button id="restartBtn" class="btn secondary-btn">
-            Restart
-          </button>
-
-        </div>
-
-
-        <!-- Best Score -->
-        <div class="best-score">
-          🏆 Best WPM:
-          <strong id="bestWpm">0</strong>
-        </div>
-
-
-        <!-- Result -->
-        <div id="result" class="result hidden">
-
-          <h2>Test Completed 🎉</h2>
-
-          <div class="result-grid">
-
-            <div class="result-box">
-              <span>WPM</span>
-              <strong id="finalWpm">0</strong>
-            </div>
-
-            <div class="result-box">
-              <span>Accuracy</span>
-              <strong id="finalAccuracy">0%</strong>
-            </div>
-
-            <div class="result-box">
-              <span>Words Typed</span>
-              <strong id="finalWords">0</strong>
-            </div>
-
-            <div class="result-box">
-              <span>Characters</span>
-              <strong id="finalCharacters">0</strong>
-            </div>
-
-            <div class="result-box">
-              <span>Correct Characters</span>
-              <strong id="finalCorrect">0</strong>
-            </div>
-
-            <div class="result-box">
-              <span>Mistakes</span>
-              <strong id="finalMistakes">0</strong>
-            </div>
-
-            <div class="result-box">
-              <span>Time Taken</span>
-              <strong id="finalTime">60s</strong>
-            </div>
-
-          </div>
-
-          <p id="resultMessage">
-            Keep practicing to improve your typing speed.
-          </p>
-
-        </div>
-
-
-        <!-- Score History -->
-        <div class="history">
-
-          <div class="history-header">
-            <h2>📈 Recent Scores</h2>
-
-            <button id="clearHistory">
-              Clear
-            </button>
-          </div>
-
-          <div id="scoreHistory" class="score-history">
-            <p class="no-history">No scores yet.</p>
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <footer>
-        <p>
-          Typing Speed Test &copy; 2026 |
-          Abhishek Yadav
+        <p id="levelDescription">
+          Learn which finger should be used for each keyboard key.
         </p>
-      </footer>
 
-    </div>
+      </div>
 
 
-    <script src="script.js"></script>
+      <!-- TIME -->
+      <div class="time-section">
 
-  </body>
+        <div class="section-title small-title">
+          ⏱️ <span>Test Time</span>
+        </div>
+
+        <div class="time-options">
+
+          <button class="time-btn" data-time="30">
+            30s
+          </button>
+
+          <button class="time-btn active" data-time="60">
+            60s
+          </button>
+
+          <button class="time-btn" data-time="120">
+            2 Min
+          </button>
+
+          <button class="time-btn" data-time="180">
+            3 Min
+          </button>
+
+          <button class="time-btn" data-time="300">
+            5 Min
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- STATS -->
+      <div class="stats">
+
+        <div class="stats-box">
+          <span>Time</span>
+          <strong id="timer">60s</strong>
+        </div>
+
+        <div class="stats-box">
+          <span>WPM</span>
+          <strong id="wpm">0</strong>
+        </div>
+
+        <div class="stats-box">
+          <span>Accuracy</span>
+          <strong id="accuracy">100%</strong>
+        </div>
+
+        <div class="stats-box">
+          <span>Mistakes</span>
+          <strong id="mistakes">0</strong>
+        </div>
+
+      </div>
+
+
+      <!-- PROGRESS -->
+      <div class="progress-container">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+
+
+      <!-- FINGER GUIDE -->
+      <div id="fingerGuide" class="finger-guide">
+
+        <div class="finger-icon">
+          👆
+        </div>
+
+        <div>
+          <strong id="fingerTitle">
+            Left Pinky Finger
+          </strong>
+
+          <p id="fingerText">
+            Use your left little finger.
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- KEYBOARD -->
+      <div id="keyboardArea" class="keyboard-area">
+
+        <div class="keyboard">
+
+          <div class="key-row">
+            <span class="key" data-key="q">Q</span>
+            <span class="key" data-key="w">W</span>
+            <span class="key" data-key="e">E</span>
+            <span class="key" data-key="r">R</span>
+            <span class="key" data-key="t">T</span>
+            <span class="key" data-key="y">Y</span>
+            <span class="key" data-key="u">U</span>
+            <span class="key" data-key="i">I</span>
+            <span class="key" data-key="o">O</span>
+            <span class="key" data-key="p">P</span>
+          </div>
+
+          <div class="key-row second-row">
+            <span class="key" data-key="a">A</span>
+            <span class="key" data-key="s">S</span>
+            <span class="key" data-key="d">D</span>
+            <span class="key" data-key="f">F</span>
+            <span class="key" data-key="g">G</span>
+            <span class="key" data-key="h">H</span>
+            <span class="key" data-key="j">J</span>
+            <span class="key" data-key="k">K</span>
+            <span class="key" data-key="l">L</span>
+          </div>
+
+          <div class="key-row third-row">
+            <span class="key" data-key="z">Z</span>
+            <span class="key" data-key="x">X</span>
+            <span class="key" data-key="c">C</span>
+            <span class="key" data-key="v">V</span>
+            <span class="key" data-key="b">B</span>
+            <span class="key" data-key="n">N</span>
+            <span class="key" data-key="m">M</span>
+          </div>
+
+        </div>
+
+        <p class="keyboard-note">
+          ⌨️ Follow the highlighted key
+        </p>
+
+      </div>
+
+
+      <!-- TEXT AREA -->
+      <div class="text-section">
+
+        <div class="section-title">
+          📝 <span id="practiceHeading">
+            Practice
+          </span>
+        </div>
+
+        <div id="textDisplay" class="text-display"></div>
+
+      </div>
+
+
+      <!-- INPUT -->
+      <div class="input-section">
+
+        <label for="textInput">
+          Start typing here
+        </label>
+
+        <textarea
+          id="textInput"
+          placeholder="Click Start Test and begin typing..."
+          disabled
+          spellcheck="false"
+        ></textarea>
+
+      </div>
+
+
+      <!-- BUTTONS -->
+      <div class="buttons">
+
+        <button id="startBtn" class="btn primary">
+          ▶ Start Test
+        </button>
+
+        <button id="restartBtn" class="btn secondary">
+          ↻ Restart
+        </button>
+
+      </div>
+
+
+      <!-- BEST SCORE -->
+      <div class="best-score">
+        🏆 Best WPM:
+        <strong id="bestWpm">0</strong>
+      </div>
+
+
+      <!-- RESULT -->
+      <div id="result" class="result hidden">
+
+        <h2>🎉 Task Completed!</h2>
+
+        <p class="result-subtitle">
+          Great work! Here is your typing performance.
+        </p>
+
+        <div class="result-grid">
+
+          <div class="result-box">
+            <span>WPM</span>
+            <strong id="finalWpm">0</strong>
+          </div>
+
+          <div class="result-box">
+            <span>Accuracy</span>
+            <strong id="finalAccuracy">0%</strong>
+          </div>
+
+          <div class="result-box">
+            <span>Words Typed</span>
+            <strong id="finalWords">0</strong>
+          </div>
+
+          <div class="result-box">
+            <span>Characters</span>
+            <strong id="finalCharacters">0</strong>
+          </div>
+
+          <div class="result-box">
+            <span>Correct</span>
+            <strong id="finalCorrect">0</strong>
+          </div>
+
+          <div class="result-box">
+            <span>Mistakes</span>
+            <strong id="finalMistakes">0</strong>
+          </div>
+
+          <div class="result-box">
+            <span>Time Taken</span>
+            <strong id="finalTime">60s</strong>
+          </div>
+
+        </div>
+
+        <p id="resultMessage">
+          Keep practicing to improve your typing.
+        </p>
+
+      </div>
+
+
+      <!-- HISTORY -->
+      <div class="history">
+
+        <div class="history-header">
+
+          <h2>📈 Recent Scores</h2>
+
+          <button id="clearHistory">
+            Clear
+          </button>
+
+        </div>
+
+        <div id="scoreHistory">
+          <p class="no-history">
+            No scores yet.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+      Typing Master © 2026 | SpireX Foundation
+    </footer>
+
+  </div>
+
+
+  <script src="script.js"></script>
+
+</body>
+
 </html>
