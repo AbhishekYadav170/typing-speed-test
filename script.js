@@ -1,7 +1,5 @@
 
-/* =========================================
-   ELEMENTS
-========================================= */
+/* ELEMENTS */
 
 const input = document.getElementById("textInput");
 
@@ -118,9 +116,7 @@ const levelInfo = {
 };
 
 
-/* =========================================
-   FINGER INFORMATION
-========================================= */
+/* == FINGER INFORMATION == */
 
 const fingerData = {
 
@@ -185,9 +181,7 @@ const level1Keys = [
 ];
 
 
-/* =========================================
-   LEVEL 2 KEY PRACTICE
-========================================= */
+/* == LEVEL 2 KEY PRACTICE == */
 
 const level2Keys = [
 
@@ -216,9 +210,7 @@ const level2Keys = [
 ];
 
 
-/* =========================================
-   LEVEL 3 SENTENCES
-========================================= */
+/* == LEVEL 3 SENTENCES == */
 
 const level3Texts = [
 
@@ -241,9 +233,7 @@ const level3Texts = [
 ];
 
 
-/* =========================================
-   LEVEL 4 SENTENCES
-========================================= */
+/* == LEVEL 4 SENTENCES == */
 
 const level4Texts = [
 
@@ -266,9 +256,7 @@ const level4Texts = [
 ];
 
 
-/* =========================================
-   LEVEL 5 PARAGRAPHS
-========================================= */
+/* == LEVEL 5 PARAGRAPHS == */
 
 const level5Texts = [
 
@@ -276,7 +264,7 @@ const level5Texts = [
 
     `Technology has become an important part of education, business, communication, and everyday life. Almost every profession requires people to use computers and digital tools. Good typing skills can save time and make computer work much easier. By practicing regularly, learning the correct finger positions, and maintaining good accuracy, anyone can gradually become a confident and efficient typist.`,
 
-    `Becoming a fast typist does not happen in one day. It requires regular practice, concentration, patience, and a willingness to correct mistakes. Beginners should first learn the correct finger positions and practice individual keyboard keys. After becoming comfortable with the keyboard, they can move to words, sentences, and finally longer paragraphs. With consistent practice, typing becomes natural and requires less conscious effort.`,
+    `Becoming a fast typist does not happen in one day. It requires regular practice, concentration, patience, and a willingness to correct mistakes. Beginners should first learn the correct finger positions and practice individual keyboard keys. After becoming comfortable with the keyboard, they can move to words, sentences, and finally longer paragraphs. With consistent practice, typing becomes natural and requires less conscious effort`,
 
     `A successful typing session should always focus on both speed and accuracy. Typing very quickly while making many mistakes is not useful because correcting those mistakes takes additional time. Instead, try to maintain a steady rhythm and concentrate on each character. As your accuracy improves, your speed will naturally increase. Practice different sentences and paragraphs so that your fingers become comfortable with many different combinations of letters and words.`
 
