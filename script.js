@@ -1,12 +1,12 @@
 
-/* ELEMENTS */
+// ======================================================
+// DOM ELEMENTS
+// ======================================================
 
 const input = document.getElementById("textInput");
 
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
-
-const themeBtn = document.getElementById("themeBtn");
 
 const timer = document.getElementById("timer");
 const wpm = document.getElementById("wpm");
@@ -17,602 +17,755 @@ const progressBar = document.getElementById("progressBar");
 
 const textDisplay = document.getElementById("textDisplay");
 
-const bestWpmDisplay = document.getElementById("bestWpm");
+const themeBtn = document.getElementById("themeBtn");
 
-const result = document.getElementById("result");
+const bestWpmDisplay =
+    document.getElementById("bestWpm");
 
-const finalWpm = document.getElementById("finalWpm");
-const finalAccuracy = document.getElementById("finalAccuracy");
-const finalWords = document.getElementById("finalWords");
-const finalCharacters = document.getElementById("finalCharacters");
-const finalCorrect = document.getElementById("finalCorrect");
-const finalMistakes = document.getElementById("finalMistakes");
-const finalTime = document.getElementById("finalTime");
+const clearHistoryBtn =
+    document.getElementById("clearHistory");
 
-const resultMessage = document.getElementById("resultMessage");
+const scoreHistory =
+    document.getElementById("scoreHistory");
 
-const clearHistoryBtn = document.getElementById("clearHistory");
-const scoreHistory = document.getElementById("scoreHistory");
+const result =
+    document.getElementById("result");
 
-const levelTitle = document.getElementById("levelTitle");
-const levelDescription = document.getElementById("levelDescription");
+const finalWpm =
+    document.getElementById("finalWpm");
 
-const practiceHeading = document.getElementById("practiceHeading");
+const finalAccuracy =
+    document.getElementById("finalAccuracy");
 
-const fingerGuide = document.getElementById("fingerGuide");
-const fingerTitle = document.getElementById("fingerTitle");
-const fingerText = document.getElementById("fingerText");
+const finalWords =
+    document.getElementById("finalWords");
 
-const keyboardArea = document.getElementById("keyboardArea");
+const finalCharacters =
+    document.getElementById("finalCharacters");
 
-const levelButtons = document.querySelectorAll(".level-btn");
-const timeButtons = document.querySelectorAll(".time-btn");
+const finalCorrect =
+    document.getElementById("finalCorrect");
 
-const keyboardKeys = document.querySelectorAll(".key");
+const finalMistakes =
+    document.getElementById("finalMistakes");
+
+const finalTime =
+    document.getElementById("finalTime");
+
+const resultMessage =
+    document.getElementById("resultMessage");
 
 
-/* =========================================
-   VARIABLES
-========================================= */
+// ======================================================
+// LEVEL ELEMENTS
+// ======================================================
+
+const levelButtons =
+    document.querySelectorAll(".level-btn");
+
+const levelTitle =
+    document.getElementById("levelTitle");
+
+const levelDescription =
+    document.getElementById("levelDescription");
+
+const practiceHeading =
+    document.getElementById("practiceHeading");
+
+
+// ======================================================
+// FINGER GUIDE
+// ======================================================
+
+const fingerGuide =
+    document.getElementById("fingerGuide");
+
+const fingerTitle =
+    document.getElementById("fingerTitle");
+
+const fingerText =
+    document.getElementById("fingerText");
+
+
+// ======================================================
+// KEYBOARD
+// ======================================================
+
+const keyboardArea =
+    document.getElementById("keyboardArea");
+
+const keys =
+    document.querySelectorAll(".key");
+
+
+// ======================================================
+// TIME
+// ======================================================
+
+const timeButtons =
+    document.querySelectorAll(".time-btn");
+
+
+// ======================================================
+// VARIABLES
+// ======================================================
 
 let selectedLevel = 1;
 
 let selectedTime = 60;
 
-let time = 60;
+let time = selectedTime;
 
-let timerInterval = null;
+let interval = null;
 
 let testStarted = false;
 
 let currentText = "";
 
-let correctCharacters = 0;
+let currentTargetKey = "";
 
-let mistakeCharacters = 0;
+let totalCorrect = 0;
+
+let totalMistakes = 0;
+
+let completedTests = 0;
 
 
-/* =========================================
-   LEVEL INFORMATION
-========================================= */
+// ======================================================
+// LEVEL INFORMATION
+// ======================================================
 
 const levelInfo = {
 
     1: {
         title: "Level 1 - Finger Practice",
+
         description:
             "Learn which finger should be used for each keyboard key.",
-        heading: "Finger Practice"
+
+        heading:
+            "Finger Practice"
     },
 
     2: {
         title: "Level 2 - Keyboard Keys",
+
         description:
-            "Practice keyboard keys and follow the highlighted key.",
-        heading: "Keyboard Key Practice"
+            "Practice individual keyboard keys and learn proper key positions.",
+
+        heading:
+            "Keyboard Key Practice"
     },
 
     3: {
         title: "Level 3 - Easy Sentences",
+
         description:
-            "Practice simple sentences while improving typing accuracy.",
-        heading: "Easy Sentence Practice"
+            "Practice simple words and easy sentences to build typing confidence.",
+
+        heading:
+            "Easy Sentence Practice"
     },
 
     4: {
-        title: "Level 4 - Sentence Practice",
+        title: "Level 4 - Sentences",
+
         description:
-            "Type longer sentences to improve your speed and accuracy.",
-        heading: "Sentence Practice"
+            "Practice longer sentences with punctuation and capital letters.",
+
+        heading:
+            "Sentence Practice"
     },
 
     5: {
-        title: "Level 5 - Paragraph Practice",
+        title: "Level 5 - Paragraph",
+
         description:
-            "Type long paragraphs just like a professional typing institute.",
-        heading: "Paragraph Practice"
+            "Test your typing speed using long paragraphs and realistic text.",
+
+        heading:
+            "Paragraph Practice"
     }
 
 };
 
 
-/* == FINGER INFORMATION == */
+// ======================================================
+// FINGER MAPPING
+// ======================================================
 
-const fingerData = {
+const fingerMap = {
 
-    q: ["Left Pinky Finger", "Use your left little finger."],
-    a: ["Left Pinky Finger", "Use your left little finger."],
-    z: ["Left Pinky Finger", "Use your left little finger."],
+    q: {
+        finger: "Left Pinky Finger",
+        text: "Use your left little finger to press Q."
+    },
 
-    w: ["Left Ring Finger", "Use your left ring finger."],
-    s: ["Left Ring Finger", "Use your left ring finger."],
-    x: ["Left Ring Finger", "Use your left ring finger."],
+    a: {
+        finger: "Left Pinky Finger",
+        text: "Use your left little finger to press A."
+    },
 
-    e: ["Left Middle Finger", "Use your left middle finger."],
-    d: ["Left Middle Finger", "Use your left middle finger."],
-    c: ["Left Middle Finger", "Use your left middle finger."],
+    z: {
+        finger: "Left Pinky Finger",
+        text: "Use your left little finger to press Z."
+    },
 
-    r: ["Left Index Finger", "Use your left index finger."],
-    f: ["Left Index Finger", "Use your left index finger."],
-    v: ["Left Index Finger", "Use your left index finger."],
 
-    t: ["Left Index Finger", "Use your left index finger."],
-    g: ["Left Index Finger", "Use your left index finger."],
-    b: ["Left Index Finger", "Use your left index finger."],
+    w: {
+        finger: "Left Ring Finger",
+        text: "Use your left ring finger to press W."
+    },
 
-    y: ["Right Index Finger", "Use your right index finger."],
-    h: ["Right Index Finger", "Use your right index finger."],
-    n: ["Right Index Finger", "Use your right index finger."],
+    s: {
+        finger: "Left Ring Finger",
+        text: "Use your left ring finger to press S."
+    },
 
-    u: ["Right Index Finger", "Use your right index finger."],
-    j: ["Right Index Finger", "Use your right index finger."],
-    m: ["Right Index Finger", "Use your right index finger."],
+    x: {
+        finger: "Left Ring Finger",
+        text: "Use your left ring finger to press X."
+    },
 
-    i: ["Right Middle Finger", "Use your right middle finger."],
-    k: ["Right Middle Finger", "Use your right middle finger."],
 
-    o: ["Right Ring Finger", "Use your right ring finger."],
-    l: ["Right Ring Finger", "Use your right ring finger."],
+    e: {
+        finger: "Left Middle Finger",
+        text: "Use your left middle finger to press E."
+    },
 
-    p: ["Right Pinky Finger", "Use your right little finger."]
+    d: {
+        finger: "Left Middle Finger",
+        text: "Use your left middle finger to press D."
+    },
+
+    c: {
+        finger: "Left Middle Finger",
+        text: "Use your left middle finger to press C."
+    },
+
+
+    r: {
+        finger: "Left Index Finger",
+        text: "Use your left index finger to press R."
+    },
+
+    f: {
+        finger: "Left Index Finger",
+        text: "Use your left index finger to press F."
+    },
+
+    v: {
+        finger: "Left Index Finger",
+        text: "Use your left index finger to press V."
+    },
+
+    t: {
+        finger: "Left Index Finger",
+        text: "Use your left index finger to press T."
+    },
+
+    g: {
+        finger: "Left Index Finger",
+        text: "Use your left index finger to press G."
+    },
+
+    b: {
+        finger: "Left Index Finger",
+        text: "Use your left index finger to press B."
+    },
+
+
+    y: {
+        finger: "Right Index Finger",
+        text: "Use your right index finger to press Y."
+    },
+
+    h: {
+        finger: "Right Index Finger",
+        text: "Use your right index finger to press H."
+    },
+
+    n: {
+        finger: "Right Index Finger",
+        text: "Use your right index finger to press N."
+    },
+
+    u: {
+        finger: "Right Index Finger",
+        text: "Use your right index finger to press U."
+    },
+
+    j: {
+        finger: "Right Index Finger",
+        text: "Use your right index finger to press J."
+    },
+
+    m: {
+        finger: "Right Index Finger",
+        text: "Use your right index finger to press M."
+    },
+
+
+    i: {
+        finger: "Right Middle Finger",
+        text: "Use your right middle finger to press I."
+    },
+
+    k: {
+        finger: "Right Middle Finger",
+        text: "Use your right middle finger to press K."
+    },
+
+
+    o: {
+        finger: "Right Ring Finger",
+        text: "Use your right ring finger to press O."
+    },
+
+    l: {
+        finger: "Right Ring Finger",
+        text: "Use your right ring finger to press L."
+    },
+
+
+    p: {
+        finger: "Right Pinky Finger",
+        text: "Use your right little finger to press P."
+    }
+
 };
 
 
-/* =========================================
-   LEVEL 1 KEY PRACTICE
-========================================= */
+// ======================================================
+// LEVEL 1 - FINGER PRACTICE
+// ======================================================
 
-const level1Keys = [
+const fingerPractice = [
 
-    "a s d f",
-    "j k l",
+    "asdf jkl;",
+
+    "asdf asdf jkl; jkl;",
+
     "a s d f j k l",
-    "f j f j",
-    "a a s s d d f f",
-    "j j k k l l",
 
-    "asdf",
-    "jkl",
-    "asdf jkl",
-    "fj fj",
-    "asdf jkl",
-    "fdsa jkl"
+    "f d s a j k l",
+
+    "asdf jkl asdf jkl",
+
+    "aass ddff jjkk ll",
+
+    "asdf fdsa jkl lkj",
+
+    "fj fj dk dk sl sl",
+
+    "asdf jkl; asdf jkl;"
 
 ];
 
 
-/* == LEVEL 2 KEY PRACTICE == */
+// ======================================================
+// LEVEL 2 - KEYBOARD PRACTICE
+// ======================================================
 
-const level2Keys = [
-
-    "q w e r t y u i o p",
-
-    "a s d f g h j k l",
-
-    "z x c v b n m",
-
-    "qaz wsx edc rfv tgb",
-
-    "yhn ujm ik ol p",
+const keyboardPractice = [
 
     "qwerty",
 
     "asdfgh",
 
-    "zxcvbnm",
+    "zxcvbn",
 
     "qwertyuiop",
 
     "asdfghjkl",
 
-    "zxcvbnm"
+    "zxcvbnm",
+
+    "qaz wsx edc rfv",
+
+    "tgb yhn ujm",
+
+    "qwert asdfg zxcvb",
+
+    "yuiop hjkl nm"
 
 ];
 
 
-/* == LEVEL 3 SENTENCES == */
+// ======================================================
+// LEVEL 3 - EASY SENTENCES
+// ======================================================
 
 const level3Texts = [
 
+    "I like to learn typing every day.",
+
+    "Typing is a useful skill for everyone.",
+
+    "Practice typing and improve your speed.",
+
     "I can type faster with regular practice.",
 
-    "Typing is an important computer skill.",
+    "Learning typing makes computer work easier.",
 
-    "Practice every day and improve your typing.",
+    "Small practice every day brings better results.",
 
     "Keep your fingers on the correct keyboard keys.",
 
-    "Good typing requires speed and accuracy.",
+    "Good typing needs patience and regular practice.",
 
-    "Learning typing can make computer work easier.",
+    "I will improve my typing speed step by step.",
 
-    "Stay focused and type every word carefully.",
-
-    "Small improvements can make a big difference."
+    "Typing correctly is more important than typing fast."
 
 ];
 
 
-/* == LEVEL 4 SENTENCES == */
+// ======================================================
+// LEVEL 4 - SENTENCES
+// ======================================================
 
 const level4Texts = [
 
-    "Learning to type correctly takes time, patience, and regular practice every day.",
+    "Technology has changed the way people work and communicate.",
 
-    "A good typist focuses on accuracy first and gradually increases typing speed.",
+    "Regular typing practice can improve both speed and accuracy.",
 
-    "Keep your hands in the correct position and use the proper finger for every key.",
+    "A good typist focuses on accuracy before trying to type faster.",
 
-    "Typing without looking at the keyboard helps you become faster and more confident.",
+    "Web developers spend many hours writing and editing computer code.",
 
-    "Regular practice improves muscle memory and makes typing more comfortable.",
+    "Learning keyboard shortcuts can make everyday computer work easier.",
 
-    "Students and professionals can save a lot of time by developing good typing skills.",
+    "Students can improve their productivity by learning touch typing.",
 
-    "Focus on every character, maintain a steady rhythm, and avoid unnecessary mistakes.",
+    "Professional typing requires concentration, consistency, and practice.",
 
-    "The goal of typing practice is to become fast, accurate, comfortable, and consistent."
+    "Good posture and correct finger placement can make typing more comfortable.",
+
+    "The best way to improve typing speed is to practice a little every day.",
+
+    "Modern computer users can save a lot of time by developing strong typing skills."
 
 ];
 
 
-/* == LEVEL 5 PARAGRAPHS == */
+// ======================================================
+// LEVEL 5 - LONG PARAGRAPHS
+// ======================================================
 
 const level5Texts = [
 
-    `Typing is an essential computer skill that can help students and professionals work more efficiently. When you practice regularly, your fingers slowly learn the position of every key on the keyboard. At first, typing may feel difficult and slow, but with patience and consistency, your speed and accuracy will improve. The most important thing is to focus on correct typing rather than trying to type extremely fast.`,
+    `Typing is an important computer skill that can help students, developers, writers, and professionals work more efficiently. When you practice regularly, your fingers slowly become familiar with the keyboard and you no longer need to look at every key. The main goal is not simply to type quickly, but to type accurately while maintaining a comfortable rhythm. With patience and daily practice, your typing speed can improve naturally over time.`,
 
-    `Technology has become an important part of education, business, communication, and everyday life. Almost every profession requires people to use computers and digital tools. Good typing skills can save time and make computer work much easier. By practicing regularly, learning the correct finger positions, and maintaining good accuracy, anyone can gradually become a confident and efficient typist.`,
+    `Learning to type correctly requires patience, concentration, and consistency. At the beginning, it may feel difficult to remember which finger should press each key, but regular practice makes the movements easier. Try to keep your hands in the correct position and avoid looking at the keyboard too often. Focus on accuracy first and speed will gradually increase. A few minutes of focused practice every day can produce noticeable improvement after several weeks.`,
 
-    `Becoming a fast typist does not happen in one day. It requires regular practice, concentration, patience, and a willingness to correct mistakes. Beginners should first learn the correct finger positions and practice individual keyboard keys. After becoming comfortable with the keyboard, they can move to words, sentences, and finally longer paragraphs. With consistent practice, typing becomes natural and requires less conscious effort`,
+    `Modern software developers spend a large amount of time working with computers, writing code, reading documentation, testing applications, and communicating with their teams. Strong typing skills allow developers to focus more on solving problems instead of searching for individual keys. Touch typing also helps reduce unnecessary hand movement and can make long working sessions more comfortable. Improving typing is therefore a useful investment for anyone who works regularly with a computer.`,
 
-    `A successful typing session should always focus on both speed and accuracy. Typing very quickly while making many mistakes is not useful because correcting those mistakes takes additional time. Instead, try to maintain a steady rhythm and concentrate on each character. As your accuracy improves, your speed will naturally increase. Practice different sentences and paragraphs so that your fingers become comfortable with many different combinations of letters and words.`
+    `Building a useful skill takes time and consistent effort. Typing is no different. Instead of trying to achieve a very high speed immediately, focus on making each practice session accurate and comfortable. Start with simple keys, move to words and sentences, and finally practice longer paragraphs. When you make a mistake, do not become frustrated. Learn from it, slow down when necessary, and continue practicing. Over time your muscle memory will improve and typing will become more natural.`,
+
+    `A professional typing practice system should gradually increase difficulty as the learner becomes more comfortable. Beginners should first understand keyboard positions and finger movement. After that they can practice individual keys, common words, short sentences, and longer paragraphs. Timed tests can then be used to measure progress through words per minute, accuracy, correct characters, and mistakes. This step by step approach makes learning easier and gives the learner a clear sense of progress.`
 
 ];
 
 
-/* =========================================
-   GET TEXT ACCORDING TO TIME
-========================================= */
+// ======================================================
+// GET RANDOM ITEM
+// ======================================================
 
-function getTextForPractice() {
+function randomItem(array) {
 
-    /* LEVEL 1 */
+    const random =
+        Math.floor(Math.random() * array.length);
 
-    if (selectedLevel === 1) {
-
-        const random =
-            Math.floor(Math.random() * level1Keys.length);
-
-        return level1Keys[random];
-    }
-
-
-    /* LEVEL 2 */
-
-    if (selectedLevel === 2) {
-
-        const random =
-            Math.floor(Math.random() * level2Keys.length);
-
-        return level2Keys[random];
-    }
-
-
-    /* LEVEL 3 */
-
-    if (selectedLevel === 3) {
-
-        const random =
-            Math.floor(Math.random() * level3Texts.length);
-
-        return level3Texts[random];
-    }
-
-
-    /* LEVEL 4 */
-
-    if (selectedLevel === 4) {
-
-        const random =
-            Math.floor(Math.random() * level4Texts.length);
-
-        return level4Texts[random];
-    }
-
-
-    /* LEVEL 5 */
-
-    if (selectedLevel === 5) {
-
-        const random =
-            Math.floor(Math.random() * level5Texts.length);
-
-        return level5Texts[random];
-    }
-
+    return array[random];
 }
 
 
-/* =========================================
-   SHOW TEXT
-========================================= */
+// ======================================================
+// GET TEXT BASED ON LEVEL + TIME
+// ======================================================
+
+function getPracticeText() {
+
+    // LEVEL 1
+    if (selectedLevel === 1) {
+
+        return randomItem(fingerPractice);
+
+    }
+
+
+    // LEVEL 2
+    if (selectedLevel === 2) {
+
+        return randomItem(keyboardPractice);
+
+    }
+
+
+    // LEVEL 3
+    if (selectedLevel === 3) {
+
+        const list = [...level3Texts];
+
+        if (selectedTime >= 120) {
+            list.push(
+                "I practice typing slowly and carefully because accuracy helps me become faster."
+            );
+        }
+
+        if (selectedTime >= 180) {
+            list.push(
+                "Every new typing lesson helps me become more comfortable with the keyboard."
+            );
+        }
+
+        if (selectedTime >= 300) {
+            list.push(
+                "With daily practice, I can develop better finger movement, stronger accuracy, and faster typing speed."
+            );
+        }
+
+        return randomItem(list);
+    }
+
+
+    // LEVEL 4
+    if (selectedLevel === 4) {
+
+        const list = [...level4Texts];
+
+        if (selectedTime >= 120) {
+
+            list.push(
+                "Learning to type without looking at the keyboard can improve concentration and make computer work more efficient."
+            );
+
+        }
+
+        if (selectedTime >= 180) {
+
+            list.push(
+                "Developing a consistent typing rhythm is important because speed should always be balanced with accuracy and control."
+            );
+
+        }
+
+        if (selectedTime >= 300) {
+
+            list.push(
+                "People who spend many hours using computers can benefit greatly from touch typing because it reduces unnecessary movement and allows them to focus on their actual work."
+            );
+
+        }
+
+        return randomItem(list);
+    }
+
+
+    // LEVEL 5
+    if (selectedLevel === 5) {
+
+        let text = randomItem(level5Texts);
+
+        // Longer content for longer tests
+        if (selectedTime >= 120) {
+
+            text += " " + randomItem(level5Texts);
+
+        }
+
+        if (selectedTime >= 180) {
+
+            text += " " + randomItem(level5Texts);
+
+        }
+
+        if (selectedTime >= 300) {
+
+            text += " " + randomItem(level5Texts);
+
+            text += " " + randomItem(level5Texts);
+
+        }
+
+        return text;
+    }
+
+
+    return randomItem(level3Texts);
+}
+
+
+// ======================================================
+// SHOW RANDOM TEXT
+// ======================================================
 
 function showRandomText() {
 
-    currentText = getTextForPractice();
+    currentText = getPracticeText();
 
     textDisplay.innerHTML = "";
 
-    for (let i = 0; i < currentText.length; i++) {
+    for (
+        let i = 0;
+        i < currentText.length;
+        i++
+    ) {
 
-        const span = document.createElement("span");
+        const span =
+            document.createElement("span");
 
-        span.innerText = currentText[i];
+        span.innerText =
+            currentText[i];
 
         textDisplay.appendChild(span);
-
     }
 
     highlightText();
 
-    updateKeyboard();
-
+    updateLevelUI();
 }
 
 
-/* =========================================
-   LEVEL UI
-========================================= */
+// ======================================================
+// UPDATE LEVEL UI
+// ======================================================
 
 function updateLevelUI() {
 
-    const info = levelInfo[selectedLevel];
+    const info =
+        levelInfo[selectedLevel];
 
-    levelTitle.innerText = info.title;
+    levelTitle.innerText =
+        info.title;
 
-    levelDescription.innerText = info.description;
+    levelDescription.innerText =
+        info.description;
 
-    practiceHeading.innerText = info.heading;
+    practiceHeading.innerText =
+        info.heading;
 
 
-    /* LEVEL 1 */
+    // LEVEL 1 / 2 KEYBOARD
+    if (
+        selectedLevel === 1 ||
+        selectedLevel === 2
+    ) {
+
+        keyboardArea.style.display =
+            "block";
+
+        fingerGuide.style.display =
+            "flex";
+
+    } else {
+
+        keyboardArea.style.display =
+            "none";
+
+        fingerGuide.style.display =
+            "none";
+
+    }
+
 
     if (selectedLevel === 1) {
 
-        fingerGuide.style.display = "flex";
-
-        keyboardArea.style.display = "block";
+        fingerGuide.style.display =
+            "flex";
 
         updateFingerGuide();
 
     }
 
 
-    /* LEVEL 2 */
+    if (selectedLevel === 2) {
 
-    else if (selectedLevel === 2) {
+        fingerGuide.style.display =
+            "flex";
 
-        fingerGuide.style.display = "flex";
-
-        keyboardArea.style.display = "block";
-
-        fingerTitle.innerText = "Keyboard Practice";
+        fingerTitle.innerText =
+            "Keyboard Key Practice";
 
         fingerText.innerText =
-            "Follow the highlighted keyboard key.";
-
-    }
-
-
-    /* LEVEL 3,4,5 */
-
-    else {
-
-        fingerGuide.style.display = "none";
-
-        keyboardArea.style.display = "none";
+            "Follow the highlighted key on the keyboard.";
 
     }
 
 }
 
 
-/* =========================================
-   LEVEL BUTTONS
-========================================= */
-
-levelButtons.forEach(function (button) {
-
-    button.addEventListener("click", function () {
-
-        /* Do not change level while test is running */
-
-        if (testStarted) {
-
-            return;
-
-        }
-
-
-        /* Remove active */
-
-        levelButtons.forEach(function (btn) {
-
-            btn.classList.remove("active");
-
-        });
-
-
-        /* Add active */
-
-        button.classList.add("active");
-
-
-        /* Get level */
-
-        selectedLevel =
-            Number(button.dataset.level);
-
-
-        /* Reset */
-
-        resetTest(false);
-
-
-        /* Update UI */
-
-        updateLevelUI();
-
-        showRandomText();
-
-    });
-
-});
-
-
-/* =========================================
-   TIME BUTTONS
-========================================= */
-
-timeButtons.forEach(function (button) {
-
-    button.addEventListener("click", function () {
-
-        if (testStarted) {
-
-            return;
-
-        }
-
-
-        timeButtons.forEach(function (btn) {
-
-            btn.classList.remove("active");
-
-        });
-
-
-        button.classList.add("active");
-
-
-        selectedTime =
-            Number(button.dataset.time);
-
-        time = selectedTime;
-
-
-        timer.innerText =
-            selectedTime >= 60
-                ? formatTime(selectedTime)
-                : selectedTime + "s";
-
-
-        progressBar.style.width = "100%";
-
-
-        /* New text according to level */
-
-        showRandomText();
-
-    });
-
-});
-
-
-/* =========================================
-   FORMAT TIME
-========================================= */
-
-function formatTime(seconds) {
-
-    const minutes =
-        Math.floor(seconds / 60);
-
-    const remainingSeconds =
-        seconds % 60;
-
-
-    if (minutes > 0 && remainingSeconds === 0) {
-
-        return minutes + "m";
-
-    }
-
-
-    if (minutes > 0) {
-
-        return (
-            minutes +
-            "m " +
-            remainingSeconds +
-            "s"
-        );
-
-    }
-
-
-    return seconds + "s";
-
-}
-
-
-/* =========================================
-   FINGER GUIDE
-========================================= */
+// ======================================================
+// UPDATE FINGER GUIDE
+// ======================================================
 
 function updateFingerGuide() {
 
-    if (selectedLevel !== 1) {
-
+    if (!currentText) {
         return;
+    }
+
+
+    const typed =
+        input.value;
+
+    let index =
+        typed.length;
+
+
+    while (
+        index < currentText.length &&
+        currentText[index] === " "
+    ) {
+
+        index++;
 
     }
 
 
-    const typed = input.value;
-
-    const nextCharacter =
-        currentText[typed.length];
-
-
-    if (!nextCharacter) {
-
-        fingerTitle.innerText =
-            "Practice Complete";
-
-        fingerText.innerText =
-            "Excellent! Keep practicing.";
-
+    if (index >= currentText.length) {
         return;
-
     }
 
 
-    const key =
-        nextCharacter.toLowerCase();
+    const character =
+        currentText[index].toLowerCase();
 
 
-    if (fingerData[key]) {
+    const info =
+        fingerMap[character];
+
+
+    if (info) {
 
         fingerTitle.innerText =
-            fingerData[key][0];
+            info.finger;
 
         fingerText.innerText =
-            fingerData[key][1];
+            info.text;
+
+    } else {
+
+        fingerTitle.innerText =
+            "Space Bar";
+
+        fingerText.innerText =
+            "Use your thumb to press the Space Bar.";
 
     }
 
 }
 
 
-/* =========================================
-   KEYBOARD HIGHLIGHT
-========================================= */
+// ======================================================
+// CLEAR KEYBOARD
+// ======================================================
 
-function updateKeyboard() {
+function clearKeyboard() {
 
-    keyboardKeys.forEach(function (key) {
+    keys.forEach(function (key) {
 
         key.classList.remove(
             "active-key",
@@ -622,202 +775,496 @@ function updateKeyboard() {
 
     });
 
+}
 
-    /* Keyboard only needed for Level 1 and 2 */
 
-    if (
-        selectedLevel !== 1 &&
-        selectedLevel !== 2
-    ) {
+// ======================================================
+// HIGHLIGHT NEXT KEY
+// ======================================================
 
+function highlightNextKey() {
+
+    clearKeyboard();
+
+    if (!currentText) {
         return;
-
     }
 
 
     const typed =
         input.value;
 
+    let index =
+        typed.length;
 
-    const nextCharacter =
-        currentText[typed.length];
 
+    // Skip spaces
+    while (
+        index < currentText.length &&
+        currentText[index] === " "
+    ) {
 
-    if (!nextCharacter) {
-
-        return;
+        index++;
 
     }
 
 
-    const nextKey =
-        nextCharacter.toLowerCase();
+    if (index >= currentText.length) {
+        return;
+    }
 
 
-    keyboardKeys.forEach(function (key) {
+    const character =
+        currentText[index].toLowerCase();
 
-        if (
-            key.dataset.key === nextKey
-        ) {
 
-            key.classList.add("active-key");
+    currentTargetKey =
+        character;
+
+
+    keys.forEach(function (key) {
+
+        const keyValue =
+            key.dataset.key;
+
+        if (keyValue === character) {
+
+            key.classList.add(
+                "active-key"
+            );
 
         }
 
     });
 
 
-    /* Finger information */
-
-    if (selectedLevel === 1) {
-
-        updateFingerGuide();
-
-    }
-
+    updateFingerGuide();
 }
 
 
-/* =========================================
-   START TEST
-========================================= */
+// ======================================================
+// LOAD BEST SCORE
+// ======================================================
 
-startBtn.addEventListener("click", function () {
+function loadBestScore() {
 
-    if (testStarted) {
+    const best =
+        Number(
+            localStorage.getItem("bestWpm")
+        ) || 0;
+
+    bestWpmDisplay.innerText =
+        best;
+}
+
+loadBestScore();
+
+
+// ======================================================
+// SCORE HISTORY
+// ======================================================
+
+function loadHistory() {
+
+    const history =
+        JSON.parse(
+            localStorage.getItem(
+                "typingScores"
+            )
+        ) || [];
+
+
+    scoreHistory.innerHTML = "";
+
+
+    if (history.length === 0) {
+
+        scoreHistory.innerHTML =
+            `<p class="no-history">
+                No scores yet.
+            </p>`;
 
         return;
-
     }
 
 
-    testStarted = true;
+    history
+        .slice(0, 5)
+        .forEach(function (score) {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "score-item";
+
+            item.innerHTML = `
+                <span>
+                    ${score.date}
+                </span>
+
+                <span>
+                    Level ${score.level}
+                </span>
+
+                <span>
+                    ${score.accuracy}% Accuracy
+                </span>
+
+                <strong>
+                    ${score.wpm} WPM
+                </strong>
+            `;
+
+            scoreHistory.appendChild(item);
+
+        });
+
+}
+
+loadHistory();
 
 
-    time = selectedTime;
+// ======================================================
+// LEVEL BUTTONS
+// ======================================================
+
+levelButtons.forEach(function (button) {
+
+    button.addEventListener(
+        "click",
+        function () {
+
+            // Don't change level during test
+            if (testStarted) {
+                return;
+            }
 
 
-    timer.innerText =
-        formatTime(time);
+            levelButtons.forEach(
+                function (btn) {
+
+                    btn.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
 
 
-    wpm.innerText = "0";
-
-    accuracy.innerText = "100%";
-
-    mistakesDisplay.innerText = "0";
+            button.classList.add("active");
 
 
-    progressBar.style.width = "100%";
+            selectedLevel =
+                Number(
+                    button.dataset.level
+                );
 
 
-    input.value = "";
+            // Reset practice
+            input.value = "";
 
-    input.disabled = false;
+            time = selectedTime;
 
-    result.classList.add("hidden");
+            timer.innerText =
+                selectedTime + "s";
 
-    startBtn.disabled = true;
+            wpm.innerText = "0";
+
+            accuracy.innerText =
+                "100%";
+
+            mistakesDisplay.innerText =
+                "0";
+
+            progressBar.style.width =
+                "100%";
 
 
-    /* Generate fresh text */
-
-    showRandomText();
-
-
-    input.focus();
+            result.classList.add(
+                "hidden"
+            );
 
 
-    startTimer();
+            showRandomText();
+
+            highlightNextKey();
+
+        }
+    );
 
 });
 
 
-/* =========================================
-   TIMER
-========================================= */
+// ======================================================
+// TIME BUTTONS
+// ======================================================
 
-function startTimer() {
+timeButtons.forEach(function (button) {
 
-    clearInterval(timerInterval);
+    button.addEventListener(
+        "click",
+        function () {
 
-
-    timerInterval =
-        setInterval(function () {
-
-            time--;
-
-
-            if (time < 0) {
-
-                time = 0;
-
+            if (testStarted) {
+                return;
             }
+
+
+            timeButtons.forEach(
+                function (btn) {
+
+                    btn.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+            button.classList.add("active");
+
+
+            selectedTime =
+                Number(
+                    button.dataset.time
+                );
+
+
+            time = selectedTime;
 
 
             timer.innerText =
-                formatTime(time);
-
-
-            const progress =
-                (time / selectedTime) * 100;
+                selectedTime + "s";
 
 
             progressBar.style.width =
-                progress + "%";
+                "100%";
 
 
-            calculate();
+            showRandomText();
 
-
-            if (time === 0) {
-
-                finishTest();
-
-            }
-
-        }, 1000);
-
-}
-
-
-/* =========================================
-   INPUT
-========================================= */
-
-input.addEventListener("input", function () {
-
-    if (!testStarted) {
-
-        return;
-
-    }
-
-
-    calculate();
-
-    highlightText();
-
-    updateKeyboard();
-
-
-    /* Automatically finish if complete */
-
-    if (
-        input.value.length >=
-        currentText.length
-    ) {
-
-        finishTest();
-
-    }
+        }
+    );
 
 });
 
 
-/* =========================================
-   CALCULATE
-========================================= */
+// ======================================================
+// START TEST
+// ======================================================
+
+startBtn.addEventListener(
+    "click",
+    function () {
+
+        if (testStarted) {
+            return;
+        }
+
+
+        testStarted = true;
+
+
+        time = selectedTime;
+
+
+        totalCorrect = 0;
+
+        totalMistakes = 0;
+
+
+        timer.innerText =
+            time + "s";
+
+
+        wpm.innerText =
+            "0";
+
+
+        accuracy.innerText =
+            "100%";
+
+
+        mistakesDisplay.innerText =
+            "0";
+
+
+        progressBar.style.width =
+            "100%";
+
+
+        input.value = "";
+
+        input.disabled = false;
+
+
+        result.classList.add(
+            "hidden"
+        );
+
+
+        startBtn.disabled = true;
+
+
+        // Disable level/time changes
+        levelButtons.forEach(
+            function (btn) {
+
+                btn.style.pointerEvents =
+                    "none";
+
+                btn.style.opacity =
+                    "0.6";
+
+            }
+        );
+
+
+        timeButtons.forEach(
+            function (btn) {
+
+                btn.style.pointerEvents =
+                    "none";
+
+                btn.style.opacity =
+                    "0.6";
+
+            }
+        );
+
+
+        showRandomText();
+
+
+        input.focus();
+
+
+        highlightNextKey();
+
+
+        startTimer();
+
+    }
+);
+
+
+// ======================================================
+// TIMER
+// ======================================================
+
+function startTimer() {
+
+    clearInterval(interval);
+
+
+    interval =
+        setInterval(
+            function () {
+
+                time--;
+
+
+                if (time < 0) {
+                    time = 0;
+                }
+
+
+                timer.innerText =
+                    time + "s";
+
+
+                const progress =
+                    (time / selectedTime) *
+                    100;
+
+
+                progressBar.style.width =
+                    progress + "%";
+
+
+                calculate();
+
+
+                if (time === 0) {
+
+                    finishTest();
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+// ======================================================
+// INPUT
+// ======================================================
+
+input.addEventListener(
+    "input",
+    function () {
+
+        if (!testStarted) {
+            return;
+        }
+
+
+        // Don't allow typing beyond target
+        if (
+            input.value.length >
+            currentText.length
+        ) {
+
+            input.value =
+                input.value.substring(
+                    0,
+                    currentText.length
+                );
+
+        }
+
+
+        calculate();
+
+        highlightText();
+
+        highlightNextKey();
+
+
+        // Auto move to next text
+        if (
+            input.value.length >=
+            currentText.length
+        ) {
+
+            if (selectedLevel >= 3) {
+
+                input.value = "";
+
+                showRandomText();
+
+            } else {
+
+                input.value = "";
+
+                showRandomText();
+
+            }
+
+            highlightNextKey();
+
+        }
+
+    }
+);
+
+
+// ======================================================
+// CALCULATE
+// ======================================================
 
 function calculate() {
 
@@ -827,14 +1274,16 @@ function calculate() {
 
     if (typed.length === 0) {
 
-        wpm.innerText = "0";
+        wpm.innerText =
+            "0";
 
-        accuracy.innerText = "100%";
+        accuracy.innerText =
+            "100%";
 
-        mistakesDisplay.innerText = "0";
+        mistakesDisplay.innerText =
+            "0";
 
         return;
-
     }
 
 
@@ -850,7 +1299,8 @@ function calculate() {
     ) {
 
         if (
-            typed[i] === currentText[i]
+            typed[i] ===
+            currentText[i]
         ) {
 
             correct++;
@@ -864,28 +1314,32 @@ function calculate() {
     }
 
 
-    correctCharacters = correct;
+    totalCorrect =
+        correct;
 
-    mistakeCharacters = mistakes;
+    totalMistakes =
+        mistakes;
 
 
-    /* ACCURACY */
+    // Accuracy
 
     const accuracyValue =
         (correct / typed.length) * 100;
 
 
     accuracy.innerText =
-        Math.round(accuracyValue) + "%";
+        Math.round(
+            accuracyValue
+        ) + "%";
 
 
-    /* MISTAKES */
+    // Mistakes
 
     mistakesDisplay.innerText =
         mistakes;
 
 
-    /* WPM */
+    // WPM
 
     const usedTime =
         selectedTime - time;
@@ -894,9 +1348,11 @@ function calculate() {
     if (usedTime > 0) {
 
         const words =
-            typed.trim().length > 0
-                ? typed.trim().split(/\s+/).length
-                : 0;
+            typed.trim().length === 0
+                ? 0
+                : typed.trim()
+                    .split(/\s+/)
+                    .length;
 
 
         const minutes =
@@ -915,9 +1371,9 @@ function calculate() {
 }
 
 
-/* =========================================
-   HIGHLIGHT TEXT
-========================================= */
+// ======================================================
+// HIGHLIGHT TEXT
+// ======================================================
 
 function highlightText() {
 
@@ -926,67 +1382,77 @@ function highlightText() {
 
 
     const spans =
-        textDisplay.querySelectorAll("span");
-
-
-    spans.forEach(function (span, index) {
-
-        span.classList.remove(
-            "correct",
-            "wrong",
-            "current"
+        textDisplay.querySelectorAll(
+            "span"
         );
 
 
-        if (
-            index < typed.length
-        ) {
+    spans.forEach(
+        function (span, index) {
+
+            span.classList.remove(
+                "correct",
+                "wrong",
+                "current"
+            );
+
 
             if (
-                typed[index] ===
-                currentText[index]
+                index <
+                typed.length
             ) {
 
-                span.classList.add("correct");
+                if (
+                    typed[index] ===
+                    currentText[index]
+                ) {
 
-            } else {
+                    span.classList.add(
+                        "correct"
+                    );
 
-                span.classList.add("wrong");
+                } else {
+
+                    span.classList.add(
+                        "wrong"
+                    );
+
+                }
+
+            }
+
+
+            if (
+                index ===
+                typed.length
+            ) {
+
+                span.classList.add(
+                    "current"
+                );
 
             }
 
         }
-
-
-        if (
-            index === typed.length
-        ) {
-
-            span.classList.add("current");
-
-        }
-
-    });
+    );
 
 }
 
 
-/* =========================================
-   FINISH TEST
-========================================= */
+// ======================================================
+// FINISH TEST
+// ======================================================
 
 function finishTest() {
 
     if (!testStarted) {
-
         return;
-
     }
 
 
-    clearInterval(timerInterval);
+    clearInterval(interval);
 
-    timerInterval = null;
+    interval = null;
 
 
     testStarted = false;
@@ -995,21 +1461,54 @@ function finishTest() {
     time = 0;
 
 
-    timer.innerText = "0s";
+    timer.innerText =
+        "0s";
 
-    progressBar.style.width = "0%";
+
+    progressBar.style.width =
+        "0%";
 
 
     input.disabled = true;
 
+
     startBtn.disabled = false;
+
+
+    // Enable level/time buttons
+    levelButtons.forEach(
+        function (btn) {
+
+            btn.style.pointerEvents =
+                "auto";
+
+            btn.style.opacity =
+                "1";
+
+        }
+    );
+
+
+    timeButtons.forEach(
+        function (btn) {
+
+            btn.style.pointerEvents =
+                "auto";
+
+            btn.style.opacity =
+                "1";
+
+        }
+    );
 
 
     const typed =
         input.value;
 
 
-    /* WORDS */
+    // ==================================================
+    // WORDS
+    // ==================================================
 
     let totalWords = 0;
 
@@ -1019,18 +1518,24 @@ function finishTest() {
     ) {
 
         totalWords =
-            typed.trim().split(/\s+/).length;
+            typed.trim()
+                .split(/\s+/)
+                .length;
 
     }
 
 
-    /* CHARACTERS */
+    // ==================================================
+    // CHARACTERS
+    // ==================================================
 
     const totalCharacters =
         typed.length;
 
 
-    /* CORRECT / MISTAKES */
+    // ==================================================
+    // CORRECT / MISTAKES
+    // ==================================================
 
     let correct = 0;
 
@@ -1044,7 +1549,8 @@ function finishTest() {
     ) {
 
         if (
-            typed[i] === currentText[i]
+            typed[i] ===
+            currentText[i]
         ) {
 
             correct++;
@@ -1058,7 +1564,9 @@ function finishTest() {
     }
 
 
-    /* ACCURACY */
+    // ==================================================
+    // ACCURACY
+    // ==================================================
 
     let accuracyValue = 100;
 
@@ -1068,12 +1576,17 @@ function finishTest() {
     ) {
 
         accuracyValue =
-            (correct / totalCharacters) * 100;
+            (
+                correct /
+                totalCharacters
+            ) * 100;
 
     }
 
 
-    /* WPM */
+    // ==================================================
+    // WPM
+    // ==================================================
 
     const speed =
         Math.round(
@@ -1082,14 +1595,18 @@ function finishTest() {
         );
 
 
-    /* RESULT */
+    // ==================================================
+    // RESULT
+    // ==================================================
 
     finalWpm.innerText =
         speed;
 
 
     finalAccuracy.innerText =
-        Math.round(accuracyValue) + "%";
+        Math.round(
+            accuracyValue
+        ) + "%";
 
 
     finalWords.innerText =
@@ -1109,14 +1626,18 @@ function finishTest() {
 
 
     finalTime.innerText =
-        formatTime(selectedTime);
+        selectedTime + "s";
 
 
-    /* BEST WPM */
+    // ==================================================
+    // BEST WPM
+    // ==================================================
 
     const oldBest =
         Number(
-            localStorage.getItem("bestWpm")
+            localStorage.getItem(
+                "bestWpm"
+            )
         ) || 0;
 
 
@@ -1134,7 +1655,9 @@ function finishTest() {
     }
 
 
-    /* SAVE SCORE */
+    // ==================================================
+    // SAVE HISTORY
+    // ==================================================
 
     saveScore(
         speed,
@@ -1142,7 +1665,9 @@ function finishTest() {
     );
 
 
-    /* RESULT MESSAGE */
+    // ==================================================
+    // RESULT MESSAGE
+    // ==================================================
 
     if (speed >= 60) {
 
@@ -1168,24 +1693,29 @@ function finishTest() {
     else {
 
         resultMessage.innerText =
-            "Keep practicing! You will improve with consistency. 🚀";
+            "Keep practicing! Focus on accuracy first and speed will improve. 🚀";
 
     }
 
 
-    result.classList.remove("hidden");
+    result.classList.remove(
+        "hidden"
+    );
 
 
     result.scrollIntoView({
         behavior: "smooth"
     });
 
+
+    completedTests++;
+
 }
 
 
-/* =========================================
-   SAVE SCORE
-========================================= */
+// ======================================================
+// SAVE SCORE
+// ======================================================
 
 function saveScore(
     wpmValue,
@@ -1210,15 +1740,16 @@ function saveScore(
 
     history.unshift({
 
-        level: selectedLevel,
-
-        time: selectedTime,
-
         wpm: wpmValue,
 
-        accuracy: accuracyValue,
+        accuracy:
+            accuracyValue,
 
-        date: date
+        level:
+            selectedLevel,
+
+        date:
+            date
 
     });
 
@@ -1238,75 +1769,9 @@ function saveScore(
 }
 
 
-/* =========================================
-   LOAD HISTORY
-========================================= */
-
-function loadHistory() {
-
-    const history =
-        JSON.parse(
-            localStorage.getItem(
-                "typingScores"
-            )
-        ) || [];
-
-
-    scoreHistory.innerHTML = "";
-
-
-    if (
-        history.length === 0
-    ) {
-
-        scoreHistory.innerHTML =
-            '<p class="no-history">No scores yet.</p>';
-
-        return;
-
-    }
-
-
-    history
-        .slice(0, 5)
-        .forEach(function (score) {
-
-            const item =
-                document.createElement("div");
-
-
-            item.className =
-                "score-item";
-
-
-            item.innerHTML = `
-
-                <span>
-                    Level ${score.level}
-                    • ${score.date}
-                </span>
-
-                <span>
-                    ${score.accuracy}% Accuracy
-                </span>
-
-                <strong>
-                    ${score.wpm} WPM
-                </strong>
-
-            `;
-
-
-            scoreHistory.appendChild(item);
-
-        });
-
-}
-
-
-/* =========================================
-   CLEAR HISTORY
-========================================= */
+// ======================================================
+// CLEAR HISTORY
+// ======================================================
 
 clearHistoryBtn.addEventListener(
     "click",
@@ -1316,100 +1781,103 @@ clearHistoryBtn.addEventListener(
             "typingScores"
         );
 
-
         loadHistory();
 
     }
 );
 
 
-/* =========================================
-   RESTART
-========================================= */
+// ======================================================
+// RESTART
+// ======================================================
 
 restartBtn.addEventListener(
     "click",
     function () {
 
-        resetTest(true);
+        clearInterval(interval);
+
+        interval = null;
+
+        testStarted = false;
+
+
+        time =
+            selectedTime;
+
+
+        timer.innerText =
+            selectedTime + "s";
+
+
+        wpm.innerText =
+            "0";
+
+
+        accuracy.innerText =
+            "100%";
+
+
+        mistakesDisplay.innerText =
+            "0";
+
+
+        progressBar.style.width =
+            "100%";
+
+
+        input.value = "";
+
+        input.disabled = true;
+
+
+        startBtn.disabled = false;
+
+
+        result.classList.add(
+            "hidden"
+        );
+
+
+        // Enable selectors
+
+        levelButtons.forEach(
+            function (btn) {
+
+                btn.style.pointerEvents =
+                    "auto";
+
+                btn.style.opacity =
+                    "1";
+
+            }
+        );
+
+
+        timeButtons.forEach(
+            function (btn) {
+
+                btn.style.pointerEvents =
+                    "auto";
+
+                btn.style.opacity =
+                    "1";
+
+            }
+        );
+
+
+        showRandomText();
+
+        highlightNextKey();
 
     }
 );
 
 
-/* =========================================
-   RESET TEST
-========================================= */
-
-function resetTest(generateText = true) {
-
-    clearInterval(timerInterval);
-
-    timerInterval = null;
-
-    testStarted = false;
-
-    time = selectedTime;
-
-
-    timer.innerText =
-        formatTime(selectedTime);
-
-
-    wpm.innerText = "0";
-
-    accuracy.innerText = "100%";
-
-    mistakesDisplay.innerText = "0";
-
-
-    progressBar.style.width = "100%";
-
-
-    input.value = "";
-
-    input.disabled = true;
-
-
-    startBtn.disabled = false;
-
-
-    result.classList.add("hidden");
-
-
-    if (generateText) {
-
-        showRandomText();
-
-    }
-
-}
-
-
-/* =========================================
-   BEST SCORE
-========================================= */
-
-function loadBestScore() {
-
-    const best =
-        Number(
-            localStorage.getItem("bestWpm")
-        ) || 0;
-
-
-    bestWpmDisplay.innerText =
-        best;
-
-}
-
-
-loadBestScore();
-
-
-/* =========================================
-   DARK MODE
-========================================= */
+// ======================================================
+// DARK MODE
+// ======================================================
 
 themeBtn.addEventListener(
     "click",
@@ -1428,7 +1896,8 @@ themeBtn.addEventListener(
 
         if (dark) {
 
-            themeBtn.innerText = "☀️";
+            themeBtn.innerText =
+                "☀️";
 
 
             localStorage.setItem(
@@ -1440,7 +1909,8 @@ themeBtn.addEventListener(
 
         else {
 
-            themeBtn.innerText = "🌙";
+            themeBtn.innerText =
+                "🌙";
 
 
             localStorage.setItem(
@@ -1454,9 +1924,9 @@ themeBtn.addEventListener(
 );
 
 
-/* =========================================
-   LOAD THEME
-========================================= */
+// ======================================================
+// LOAD SAVED THEME
+// ======================================================
 
 const savedTheme =
     localStorage.getItem("theme");
@@ -1471,19 +1941,78 @@ if (
     );
 
 
-    themeBtn.innerText = "☀️";
+    themeBtn.innerText =
+        "☀️";
 
 }
 
 
-/* =========================================
-   INITIAL SETUP
-========================================= */
+// ======================================================
+// INITIAL SETUP
+// ======================================================
 
-updateLevelUI();
+input.disabled = true;
+
+time = selectedTime;
+
+timer.innerText =
+    selectedTime + "s";
+
 
 showRandomText();
 
-resetTest(false);
+highlightNextKey();
+
+loadBestScore();
 
 loadHistory();
+
+
+// ======================================================
+// KEYBOARD PHYSICAL KEY SUPPORT
+// ======================================================
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (!testStarted) {
+            return;
+        }
+
+
+        const key =
+            event.key.toLowerCase();
+
+
+        keys.forEach(
+            function (keyboardKey) {
+
+                if (
+                    keyboardKey.dataset.key ===
+                    key
+                ) {
+
+                    keyboardKey.classList.add(
+                        "correct-key"
+                    );
+
+
+                    setTimeout(
+                        function () {
+
+                            keyboardKey.classList.remove(
+                                "correct-key"
+                            );
+
+                        },
+                        150
+                    );
+
+                }
+
+            }
+        );
+
+    }
+);
