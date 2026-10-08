@@ -110,6 +110,10 @@ body {
   border-color: #4f46e5;
   transform: translateY(-2px);
 }
+/* .level-btn:hover {
+  border-color: #4f46e5;
+  transform: translateY(-5px);
+} */
 
 .level-btn.active {
   background: #4f46e5;
