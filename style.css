@@ -85,21 +85,14 @@ body {
 }
 
 .level-btn {
-  padding: 13px 8px;
+  padding: 14px 9px;
   border: 1px solid #dbe2ea;
   background: white;
   border-radius: 10px;
   cursor: pointer;
   transition: .26s;
 }
-/* .level-btn {
-  padding: 13px 8px;
-  border: 1px solid #dbe2ea;
-  background: white;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: .26s;
-} */
+
 
 .level-btn strong {
   display: block;
